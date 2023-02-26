@@ -1,20 +1,79 @@
-import { StyleSheet, Dimensions, KeyboardAvoidingView, Pressable, Text, View } from 'react-native'
-import React from 'react'
-import FormInput from '../components/FormInput'
+import { StyleSheet, Dimensions, Pressable, Text, View, TextInput, Alert } from 'react-native'
+import React, {useEffect, useState} from 'react'
+
 import FormSubmitBtn from '../components/FormSubmitBtn'
 
 export default function SignUpScreen({navigation}) {
+
+const [fullname, setFullname] = useState('')
+const [email, setEmail] = useState('')
+const [password, setPassword] = useState('')
+const [confirmPassword, setConfirmPassword] = useState('')
+
+
+const createUser = async () => {
+  if(password !== confirmPassword){
+    Alert.alert("Passwords do not match")
+  }else{
+    try {
+  const response = await fetch('http://localhost:3000/users', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'  
+    },
+    body: JSON.stringify({fullname: fullname, email: email, password: password})
+  })
+  const data = await response.json()
+  console.log(data)
+  if(fullname === '' || email === '' || password === '' || confirmPassword === ''){
+    Alert.alert("Please fill all the fields")
+  }}
+    catch (error) { 
+      console.error(error);
+    }
+  }
+}
+
   return (
       <View style={styles.container}>
         <Text style={styles.welcome}>Welcome</Text>
         <View style={styles.login}>
           <View style={styles.inputView}>
             <Text style={styles.textInput}>Sign Up</Text>
-            <FormInput title="Username" placeholder="Username"/>
-            <FormInput title="Email" placeholder="Example@email.com"/>
-            <FormInput title="Password" placeholder="********"/>
-            <FormInput title="Confirm Password" placeholder="********"/>
-            <FormSubmitBtn title="SignUp" onPress={() => navigation.navigate("Main")}/>
+            <View>
+              <Text style={styles.headText}>Fullname</Text>
+              <TextInput 
+                value={fullname}
+                style={styles.signupInput} 
+                onChangeText={setFullname}
+                placeholderTextColor="white" 
+                placeholder="Fullname"/>
+              <Text style={styles.headText}>Email</Text>
+              <TextInput 
+                value={email}
+                style={styles.signupInput}
+                onChangeText={setEmail}
+                placeholderTextColor="white" 
+                keyboardType="email-address"
+                placeholder="Example@email.com"/>
+              <Text style={styles.headText}>Password</Text>
+              <TextInput 
+                value={password}
+                style={styles.signupInput} 
+                onChangeText={setPassword}
+                placeholderTextColor="white" 
+                secureTextEntry={true}
+                placeholder="********"/>
+              <Text style={styles.headText}>Confirm Password</Text>
+              <TextInput 
+                value={confirmPassword}
+                style={styles.signupInput} 
+                onChangeText={setConfirmPassword}
+                placeholderTextColor="white" 
+                secureTextEntry={true}
+                placeholder="********"/>
+            </View>
+            <FormSubmitBtn title="SignUp" onPress={createUser}/>
             <Pressable style={{marginTop:20}} onPress={() => navigation.navigate("Login")}>
             <Text>
               Do you have an account? Login!
@@ -61,4 +120,17 @@ const styles = StyleSheet.create({
     paddingBottom: 20,
     marginTop:80
   },
+  signupInput: {
+    borderWidth: 1, 
+    borderColor: '#003b88', 
+    width: 200, 
+    height: 40, 
+    borderRadius: 10, 
+    paddingHorizontal: 10, 
+    marginBottom: 20
+  },
+  headText:{
+    fontWeight: 'bold',
+    color: 'white',
+ }
 });

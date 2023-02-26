@@ -1,10 +1,39 @@
-import { View, Dimensions, StyleSheet, Text, Pressable} from 'react-native'
-import React from 'react'
+import { View, Dimensions, StyleSheet, Text, Pressable, TextInput, AsyncStorage} from 'react-native'
+import React, { useState}from 'react'
 
 import FormSubmitBtn from '../components/FormSubmitBtn';
-import FormInput from '../components/FormInput';
 
 export default function LogInScreen({navigation}) {
+    
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+
+    const submitForm = async () => {    
+    
+        const response = await fetch('http://localhost:3000/users/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                email: email,
+                password: password
+            })
+        })
+        if(email === '' || password === ''){
+            alert("Please fill all the fields")
+        }else{
+        const data = await response.json()
+        console.log(data)
+        if(data.status === 200){
+            navigation.navigate("Main")
+            console.log("giriş yapıldı")
+        }else{
+            alert("Invalid Credentials")
+        }
+    }}
+
+
     return (
     <View style={styles.container}>
         <Text style={styles.welcome}>Welcome Back</Text>
@@ -12,10 +41,23 @@ export default function LogInScreen({navigation}) {
         <View style={styles.inputView}>
         <Text style={styles.textInput}>Login</Text>
         <View style={{marginBottom:30}}>
-        <FormInput title="Email" placeholder="Example@email.com"/>
-        <FormInput title="Password" placeholder="********"/>
+        <Text style={styles.headText}>Email</Text>
+        <TextInput 
+            style={styles.loginInput} 
+            value={email}
+            onChangeText={setEmail}
+            placeholderTextColor="white" 
+            placeholder="Example@email.com"/>
+        <Text style={styles.headText}>Password</Text>
+        <TextInput 
+            style={styles.loginInput} 
+            value={password}
+            onChangeText={setPassword}
+            placeholderTextColor="white" 
+            secureTextEntry={true}
+            placeholder="********"/>
         </View>
-        <FormSubmitBtn title="Login" onPress={() => navigation.navigate("Main")}/>
+        <FormSubmitBtn title="Login"  onPress={submitForm}/>
         <Pressable style={{marginTop:20}} onPress={() => navigation.navigate("SignUp")}>
           <Text>
           Create an account!
@@ -62,5 +104,18 @@ const styles = StyleSheet.create({
         color: '#003b88',
         paddingBottom: 20,
         marginBottom: 20,
+    },
+    headText:{
+        fontWeight: 'bold',
+        color: 'white',
+    },
+    loginInput: {
+        borderWidth: 1, 
+        borderColor: '#003b88', 
+        width: 200, 
+        height: 40, 
+        borderRadius: 10, 
+        paddingHorizontal: 10, 
+        marginBottom: 20
     }
 });
