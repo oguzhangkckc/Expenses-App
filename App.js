@@ -1,5 +1,5 @@
-import { View, Text, StyleSheet } from 'react-native';
-import React, { useEffect, useState } from 'react';
+import { View, StyleSheet } from 'react-native';
+import React from 'react';
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -16,9 +16,16 @@ import AddScreen from './screens/AddScreen';
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
+function Auth() {
+  return (
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="LogIn" component={LogInScreen} />
+      <Stack.Screen name="SignUp" component={SignUpScreen} />
+    </Stack.Navigator>
+  );
+}
 
-function Tabs ({navigation}){
-
+function Tabs({navigation}){
   return (
     <Tab.Navigator screenOptions={({ route }) => ({
       tabBarIcon: ({ focused, color, size}) => {
@@ -69,27 +76,38 @@ function Tabs ({navigation}){
   )
 }
 
+function TabsStack(){
+  return(
+    <Stack.Navigator>
+      <Stack.Screen 
+        name="Expenses"
+        component={Tabs}
+        options={{headerShown:false}} />
+      <Stack.Screen
+        name="Add"
+        component={AddScreen}
+        options={{headerStyle:{backgroundColor:"#003b88"},headerTintColor:"white", presentation:"modal", headerBackTitleVisible: false}}/>
+    </Stack.Navigator>
+  )
+}
+
 export default function App() {
   
   return (
     <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen 
-          name="Login" 
-          component={LogInScreen} 
+          name="Auth" 
+          component={Auth} 
           options={{headerStyle:{backgroundColor:"#1aacf0"},headerShown:false}}/>
-        <Stack.Screen
-          name="SignUp"
-          component={SignUpScreen}
-          options={{headerStyle:{backgroundColor:"#1aacf0"}, headerShown:false}}/>
         <Stack.Screen 
           name='Main'
-          component={Tabs}
+          component={TabsStack}
           options={{headerShown:false}} />
         <Stack.Screen
           name="Add"
           component={AddScreen}
-          options={{headerStyle:{backgroundColor:"#003b88"},headerTintColor:"white", presentation:"modal"}}/>
+          options={{headerStyle:{backgroundColor:"#003b88"},headerTintColor:"white", presentation:"modal", headerBackTitleVisible: false}}/>
       </Stack.Navigator>
     </NavigationContainer>
   );
