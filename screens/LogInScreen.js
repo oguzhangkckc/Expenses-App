@@ -7,37 +7,17 @@ import {
   TextInput,
 } from "react-native";
 import React, { useState } from "react";
-import { AsyncStorage } from "react-native";
 
+import Login from "../components/Login";
 import FormSubmitBtn from "../components/FormSubmitBtn";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 export default function LogInScreen({ navigation }) {
+  
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+  const {signIn, error, isLoading} = Login();
 
-  const submitForm = async () => {
-    const response = await fetch("http://localhost:3000/users/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        email: email,
-        password: password,
-      }),
-    });
-    const data = await response.json();
-    if (response.ok) {
-      await AsyncStorage.setItem("token", JSON.stringify(data));
-      setError(null);
-      navigation.navigate("Main");
-    }
-
-    if (!response.ok) {
-      setError(data.message);
-    }
-  };
 
   return (
     <View style={styles.container}>
@@ -50,7 +30,7 @@ export default function LogInScreen({ navigation }) {
             <TextInput
               style={styles.loginInput}
               value={email}
-              autoCapitalize ="none" 
+              autoCapitalize="none"
               onChangeText={setEmail}
               placeholderTextColor="white"
               placeholder="Example@email.com"
@@ -59,14 +39,16 @@ export default function LogInScreen({ navigation }) {
             <TextInput
               style={styles.loginInput}
               value={password}
-              autoCapitalize ="none" 
+              autoCapitalize="none"
               onChangeText={setPassword}
               placeholderTextColor="white"
               secureTextEntry={true}
               placeholder="********"
             />
           </View>
-          <FormSubmitBtn title="Login" onPress={submitForm} />
+          <TouchableOpacity disabled={isLoading} onPress={() => signIn({email, password})}>
+          <FormSubmitBtn title="Login" onPress={() => navigation.navigate("Main")}/>
+          </TouchableOpacity>
           <Pressable
             style={{ marginTop: 20 }}
             onPress={() => navigation.navigate("SignUp")}

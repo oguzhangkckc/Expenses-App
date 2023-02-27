@@ -1,11 +1,10 @@
 import { View, Text } from 'react-native'
 import React from 'react'
 
-export default function IconButton() {
+export default function LogOutScreen() {
   return (
     <View>
-      <Text>IconButton</Text>
+      <Text>LogOutScreen</Text>
     </View>
   )
 }
-

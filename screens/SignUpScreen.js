@@ -5,49 +5,25 @@ import {
   Text,
   View,
   TextInput,
-  Alert,
 } from "react-native";
 import React, { useState } from "react";
-import { AsyncStorage } from "react-native";
 
 import FormSubmitBtn from "../components/FormSubmitBtn";
+import Register from "../components/Register";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 export default function SignUpScreen({ navigation }) {
   const [fullname, setFullname] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [error, setError] = useState("");
+  const { signUp, error, isLoading } = Register();
 
-  const createUser = async () => {
+  const HandleSubmit = (fullname, email, password) => {
     if (password !== confirmPassword) {
-      Alert.alert("Passwords do not match");
+      alert("Passwords do not match");
     } else {
-      try {
-        const response = await fetch("http://localhost:3000/users", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            fullname: fullname,
-            email: email,
-            password: password,
-          }),
-        });
-        const data = await response.json();
-        if (response.ok) {
-          setError(null);
-          await AsyncStorage.setItem("token", JSON.stringify(data));
-          navigation.navigate("Main");
-        }
-
-        if (!response.ok) {
-          setError(data.message);
-        }
-      } catch (error) {
-        console.log(error);
-      }
+      signUp({ fullname, email, password });
     }
   };
 
@@ -62,7 +38,7 @@ export default function SignUpScreen({ navigation }) {
             <TextInput
               value={fullname}
               style={styles.signupInput}
-              autoCapitalize ="none" 
+              autoCapitalize="none"
               onChangeText={setFullname}
               placeholderTextColor="white"
               placeholder="Fullname"
@@ -71,7 +47,7 @@ export default function SignUpScreen({ navigation }) {
             <TextInput
               value={email}
               style={styles.signupInput}
-              autoCapitalize ="none" 
+              autoCapitalize="none"
               onChangeText={setEmail}
               placeholderTextColor="white"
               keyboardType="email-address"
@@ -81,7 +57,7 @@ export default function SignUpScreen({ navigation }) {
             <TextInput
               value={password}
               style={styles.signupInput}
-              autoCapitalize ="none" 
+              autoCapitalize="none"
               onChangeText={setPassword}
               placeholderTextColor="white"
               secureTextEntry={true}
@@ -91,14 +67,16 @@ export default function SignUpScreen({ navigation }) {
             <TextInput
               value={confirmPassword}
               style={styles.signupInput}
-              autoCapitalize ="none" 
+              autoCapitalize="none"
               onChangeText={setConfirmPassword}
               placeholderTextColor="white"
               secureTextEntry={true}
               placeholder="********"
             />
           </View>
-          <FormSubmitBtn title="SignUp" onPress={createUser} />
+          <TouchableOpacity onPress={() => HandleSubmit(fullname, email, password)} disabled={isLoading}>
+          <FormSubmitBtn title="SignUp" />
+          </TouchableOpacity>
           <Pressable
             style={{ marginTop: 20 }}
             onPress={() => navigation.navigate("LogIn")}
