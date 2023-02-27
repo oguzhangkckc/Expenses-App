@@ -104,10 +104,6 @@ export default function App() {
           name='Main'
           component={TabsStack}
           options={{headerShown:false}} />
-        <Stack.Screen
-          name="Add"
-          component={AddScreen}
-          options={{headerStyle:{backgroundColor:"#003b88"},headerTintColor:"white", presentation:"modal", headerBackTitleVisible: false}}/>
       </Stack.Navigator>
     </NavigationContainer>
   );
