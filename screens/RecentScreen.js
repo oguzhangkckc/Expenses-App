@@ -3,40 +3,14 @@ import React from "react";
 import { useState, useEffect } from "react";
 import Ionicons from "react-native-vector-icons/Ionicons";
 
+import Expenses from "../components/Expenses";
+
 export default function RecentScreen() {
-  const [data, setData] = useState(null);
+  const { getExp, deleteExp, error, loading, data, setData } = Expenses();
 
-  const getRequest = async () => {
-    const response = await fetch("http://localhost:3000/get-expense", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    const data = await response.json();
-    const today = new Date();
-
-    const filteredData = data.filter((item) => {
-      const itemDate = new Date(item.createdAt);
-      return itemDate.toDateString() === today.toDateString();
-    });
-    setData(filteredData);
-  };
-
-  const deleteRequest = async (id) => {
-    const response = await fetch(`http://localhost:3000/${id}`, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    const data = await response.json();
-    console.log(data);
-    setData(data);
-  };
 
   useEffect(() => {
-    getRequest();
+    getExp();
   }, []);
 
   function ListEmptyComponent() {
@@ -51,6 +25,7 @@ export default function RecentScreen() {
 
   return (
     <View style={styles.container}>
+      {error && <Text style={{ color: "red" }}>{error}</Text>}
       <FlatList
         showsVerticalScrollIndicator={false}
         data={data}
@@ -63,7 +38,7 @@ export default function RecentScreen() {
                 <Text style={styles.listname}>{item.name}</Text>
               </View>
               <View style={styles.butonView}>
-                <Pressable onPress={() => deleteRequest(item._id)}>
+                <Pressable onPress={() => deleteExp(item._id)}>
                   <Ionicons name="trash" size={25} color="white" />
                 </Pressable>
               </View>

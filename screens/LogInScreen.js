@@ -6,18 +6,19 @@ import {
   Pressable,
   TextInput,
 } from "react-native";
-import React, { useState } from "react";
+import React from "react";
+import { useNavigation } from "@react-navigation/native";
+
 
 import Login from "../components/Login";
 import FormSubmitBtn from "../components/FormSubmitBtn";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
-export default function LogInScreen({ navigation }) {
+export default function LogInScreen() {
   
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const {signIn, error, isLoading} = Login();
+  const {signIn, error, isLoading, email, password, setEmail, setPassword} = Login();
 
+  const navigation = useNavigation();
 
   return (
     <View style={styles.container}>
@@ -46,8 +47,8 @@ export default function LogInScreen({ navigation }) {
               placeholder="********"
             />
           </View>
-          <TouchableOpacity disabled={isLoading} onPress={() => signIn({email, password})}>
-          <FormSubmitBtn title="Login" onPress={() => navigation.navigate("Main")}/>
+          <TouchableOpacity disabled={isLoading} onPress={() => signIn({email, password})} >
+          <FormSubmitBtn title="Login" />
           </TouchableOpacity>
           <Pressable
             style={{ marginTop: 20 }}

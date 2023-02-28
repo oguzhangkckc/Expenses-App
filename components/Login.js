@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { useNavigation } from "@react-navigation/native";
+
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { UseAuthContext } from "../hooks/UseAuthContext";
@@ -7,7 +9,10 @@ const Login = () => {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const { dispatch } = UseAuthContext();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
+  const navigation = useNavigation();
 
   const signIn = async (data) => {
     setLoading(true);
@@ -31,9 +36,12 @@ const Login = () => {
       await AsyncStorage.setItem("token", JSON.stringify(json));
       dispatch({ type: "LOGIN", payload: json });
       setLoading(false);
+      setEmail(json.email);
+      setPassword(json.password);
+      navigation.navigate("Main");
     }
   };
-  return { signIn, error, loading };
+  return { signIn, error, loading, email, password, setEmail, setPassword };
 };
 
 export default Login;

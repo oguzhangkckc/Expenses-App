@@ -1,32 +1,12 @@
-import { View, StyleSheet, FlatList, Text, Pressable } from "react-native";
+import { View, StyleSheet, FlatList, Text, Pressable, Touchable } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import React, { useState, useEffect } from "react";
 
+import Expenses from "../components/Expenses";
+import { TouchableOpacity } from "react-native-gesture-handler";
+
 export default function AllScreen() {
-  const [data, setData] = useState(null);
-
-  const getRequest = async () => {
-    const response = await fetch("http://localhost:3000/get-expense", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    const data = await response.json();
-    setData(data);
-  };
-
-  const deleteRequest = async (id) => {
-    const response = await fetch(`http://localhost:3000/${id}`, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    const data = await response.json();
-    console.log(data);
-    setData(data);
-  };
+  const { getExp, deleteExp, error, loading, data, setData } = Expenses();
 
   function ListEmptyComponent() {
     return (
@@ -39,11 +19,13 @@ export default function AllScreen() {
   }
 
   useEffect(() => {
-    getRequest();
+    getExp(data);
+    setData(data);
   }, []);
 
   return (
     <View style={styles.container}>
+      {error && <Text style={{ color: "red" }}>{error}</Text>}
       <FlatList
         showsVerticalScrollIndicator={false}
         data={data}
@@ -56,9 +38,11 @@ export default function AllScreen() {
                 <Text style={styles.listname}>{item.name}</Text>
               </View>
               <View style={styles.butonView}>
-                <Pressable onPress={() => deleteRequest(item._id)}>
+                <TouchableOpacity onPress={() => deleteExp(item._id)} disabled={loading}>
+                <Pressable>
                   <Ionicons name="trash" size={25} color="white" />
                 </Pressable>
+                </TouchableOpacity>
               </View>
             </View>
             <View style={styles.dateView}>

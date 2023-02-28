@@ -1,9 +1,9 @@
 import { Text, TouchableOpacity, StyleSheet } from 'react-native'
 import React from 'react'
 
-export default function FormSubmitBtn({title, onPress}) {
+export default function FormSubmitBtn({title, onPress, disabled}) {
   return (
-    <TouchableOpacity style={styles.container} onPress={onPress}>
+    <TouchableOpacity style={styles.container} onPress={onPress} disabled={disabled}>
         <Text style={styles.text}>{title}</Text>
     </TouchableOpacity>
   )

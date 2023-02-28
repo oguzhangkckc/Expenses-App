@@ -14,21 +14,21 @@ import Register from "../components/Register";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
 export default function RegisterScreen() {
-  const [fullname, setFullname] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const { signUp, error, isLoading } = Register();
+  const {
+    signUp,
+    error,
+    isLoading,
+    fullname,
+    email,
+    password,
+    confirmPassword,
+    setFullname,
+    setEmail,
+    setPassword,
+    setConfirmPassword,
+  } = Register();
 
   const navigation = useNavigation();
-
-  const HandleSubmit = (fullname, email, password) => {
-    if (password !== confirmPassword) {
-      alert("Passwords do not match");
-    } else {
-      signUp({ fullname, email, password });
-    }
-  };
 
   return (
     <View style={styles.container}>
@@ -78,10 +78,10 @@ export default function RegisterScreen() {
             />
           </View>
           <TouchableOpacity
-            onPress={() => HandleSubmit(fullname, email, password)}
+            onPress={() => signUp({ fullname, email, password })}
             disabled={isLoading}
           >
-            <FormSubmitBtn title="Register" onPress={() => navigation.navigate("Main")} />
+            <FormSubmitBtn title="Register" />
           </TouchableOpacity>
           <Pressable
             style={{ marginTop: 20 }}

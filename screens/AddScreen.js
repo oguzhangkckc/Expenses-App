@@ -4,26 +4,14 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import { useNavigation } from "@react-navigation/native";
 
 import FormSubmitBtn from "../components/FormSubmitBtn";
-import AddExp from "../components/AddExp";
+import Expenses from "../components/Expenses";
 
 export default function AddScreen() {
-  const [name, setName] = useState(null);
-  const [amount, setAmount] = useState(null);
-  const [description, setDescription] = useState(null);
-  const { add, error, loading } = AddExp();
-
+  
+  const { addExp, error, loading, name, amount, description, setName, setAmount, setDescription } = Expenses();
   console.log(name, amount, description);
 
   const navigation = useNavigation();
-
-  const HandleSubmit = (name, amount, description) => {
-    if (!name || !amount || !description) {
-      alert("Please fill in all fields");
-    } else {
-      add({ name, amount, description });
-      navigation.goBack();
-    }
-  };
 
   return (
     <View style={styles.container}>
@@ -59,10 +47,10 @@ export default function AddScreen() {
         </View>
         <View style={styles.button}>
           <TouchableOpacity
-            onPress={() => HandleSubmit(name, amount, description)}
+            onPress={() => addExp({ name, amount, description })}
             disabled={loading}
           >
-            <FormSubmitBtn title="Add New" />
+            <FormSubmitBtn title="Add New"/>
           </TouchableOpacity>
           {error && <Text style={{ color: "red" }}>{error}</Text>}
         </View>
