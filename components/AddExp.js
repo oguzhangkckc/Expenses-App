@@ -3,26 +3,27 @@ import { useState } from "react";
 import { UseAuthContext } from "../hooks/UseAuthContext";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const Register = () => {
+const AddExp = (data) => {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(null);
   const { dispatch } = UseAuthContext();
 
-
-  const signUp = async (data) => {
+  const { user } = UseAuthContext();
+  
+  const add = async (data) => {
     setLoading(true);
     setError(null);
+    
 
-    const response = await fetch("http://localhost:3000/register", {
+    const response = await fetch("http://localhost:3000/add-expense", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        "Authorization": `Bearer ${user.token}`,
       },
       body: JSON.stringify(data),
     });
-
     const json = await response.json();
-
     if (!response.ok) {
       setLoading(false);
       setError(json.error);
@@ -34,7 +35,7 @@ const Register = () => {
       setLoading(false);
     }
   };
-  return { signUp, error, loading };
+  return { add, error, loading };
 };
 
-export default Register;
+export default AddExp;

@@ -1,5 +1,5 @@
 import React from "react";
-import { View, ActivityIndicator, Alert } from "react-native";
+import { View, Alert } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
 
 import { NavigationContainer } from "@react-navigation/native";
@@ -10,10 +10,9 @@ import AllScreen from "../screens/AllScreen";
 import RecentScreen from "../screens/RecentScreen";
 import AddScreen from "../screens/AddScreen";
 import LogInScreen from "../screens/LogInScreen";
-import SignUpScreen from "../screens/SignUpScreen";
+import RegisterScreen from "../screens/RegisterScreen";
 import { UseAuthContext } from "../hooks/UseAuthContext";
 import { useLogout } from "../components/Logout";
-
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -24,20 +23,20 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        { user ? (
+        {user ? (
           <Stack.Screen
-          name="Main"
-          component={TabsStack}
-          options={{ headerShown: false }}
+            name="Main"
+            component={TabsStack}
+            options={{ headerShown: false }}
           />
-          ) : (
+        ) : (
           <Stack.Screen
-          name="Auth"
-          component={Auth}
-          options={{
-            headerStyle: { backgroundColor: "#1aacf0" },
-            headerShown: false,
-          }}
+            name="Auth"
+            component={Auth}
+            options={{
+              headerStyle: { backgroundColor: "#1aacf0" },
+              headerShown: false,
+            }}
           />
         )}
       </Stack.Navigator>
@@ -45,14 +44,12 @@ export default function App() {
   );
 }
 
-function Tabs({ navigation }) {
-
+function Tabs({ navigation}) {
   const { user } = UseAuthContext();
   const { logout } = useLogout();
 
   const handleLogout = () => {
     logout();
-    navigation.navigate("Auth");
   };
 
   return (
@@ -165,8 +162,7 @@ function Tabs({ navigation }) {
   );
 }
 
-function TabsStack({ navigation }) {
-
+function TabsStack() {
   return (
     <Stack.Navigator>
       <Stack.Screen
@@ -188,11 +184,11 @@ function TabsStack({ navigation }) {
   );
 }
 
-const Auth = ({ navigation }) => {
+const Auth = () => {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name="LogIn" component={LogInScreen} />
-      <Stack.Screen name="SignUp" component={SignUpScreen} />
+      <Stack.Screen name="Register" component={RegisterScreen} />
     </Stack.Navigator>
   );
 };

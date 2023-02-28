@@ -7,17 +7,20 @@ import {
   TextInput,
 } from "react-native";
 import React, { useState } from "react";
+import { useNavigation } from "@react-navigation/native";
 
 import FormSubmitBtn from "../components/FormSubmitBtn";
 import Register from "../components/Register";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
-export default function SignUpScreen({ navigation }) {
+export default function RegisterScreen() {
   const [fullname, setFullname] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const { signUp, error, isLoading } = Register();
+
+  const navigation = useNavigation();
 
   const HandleSubmit = (fullname, email, password) => {
     if (password !== confirmPassword) {
@@ -32,7 +35,7 @@ export default function SignUpScreen({ navigation }) {
       <Text style={styles.welcome}>Welcome</Text>
       <View style={styles.login}>
         <View style={styles.inputView}>
-          <Text style={styles.textInput}>Sign Up</Text>
+          <Text style={styles.textInput}>Register</Text>
           <View>
             <Text style={styles.headText}>Fullname</Text>
             <TextInput
@@ -74,8 +77,11 @@ export default function SignUpScreen({ navigation }) {
               placeholder="********"
             />
           </View>
-          <TouchableOpacity onPress={() => HandleSubmit(fullname, email, password)} disabled={isLoading}>
-          <FormSubmitBtn title="SignUp" />
+          <TouchableOpacity
+            onPress={() => HandleSubmit(fullname, email, password)}
+            disabled={isLoading}
+          >
+            <FormSubmitBtn title="Register" onPress={() => navigation.navigate("Main")} />
           </TouchableOpacity>
           <Pressable
             style={{ marginTop: 20 }}

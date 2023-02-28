@@ -51,7 +51,7 @@ export default function LogInScreen({ navigation }) {
           </TouchableOpacity>
           <Pressable
             style={{ marginTop: 20 }}
-            onPress={() => navigation.navigate("SignUp")}
+            onPress={() => navigation.navigate("Register")}
           >
             <Text>Create an account!</Text>
           </Pressable>

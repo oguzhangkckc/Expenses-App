@@ -1,40 +1,27 @@
-import { View, Text, StyleSheet, Pressable, TextInput } from "react-native";
+import { View, Text, StyleSheet, TextInput } from "react-native";
 import React, { useState } from "react";
+import { TouchableOpacity } from "react-native-gesture-handler";
+import { useNavigation } from "@react-navigation/native";
 
 import FormSubmitBtn from "../components/FormSubmitBtn";
-import Ionicons from "react-native-vector-icons/Ionicons";
+import AddExp from "../components/AddExp";
 
-export default function AddScreen({ navigation }) {
+export default function AddScreen() {
   const [name, setName] = useState(null);
   const [amount, setAmount] = useState(null);
   const [description, setDescription] = useState(null);
-  const [error, setError] = useState(null);
+  const { add, error, loading } = AddExp();
 
   console.log(name, amount, description);
 
-  const postRequest = async () => {
-    try {
-      const response = await fetch("http://localhost:3000/add-expense", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          name: name,
-          amount: amount,
-          description: description,
-        }),
-      });
-      const data = await response.json();
-      if(!name || !amount || !description){
-        setError(data.message)
-      }
-      if(name && amount && description){
-      console.log(data);
-      navigation.navigate("Expenses");
-      }
-    } catch (error) {
-      console.log(error);
+  const navigation = useNavigation();
+
+  const HandleSubmit = (name, amount, description) => {
+    if (!name || !amount || !description) {
+      alert("Please fill in all fields");
+    } else {
+      add({ name, amount, description });
+      navigation.goBack();
     }
   };
 
@@ -71,7 +58,12 @@ export default function AddScreen({ navigation }) {
           </View>
         </View>
         <View style={styles.button}>
-          <FormSubmitBtn title="Add New" onPress={postRequest} />
+          <TouchableOpacity
+            onPress={() => HandleSubmit(name, amount, description)}
+            disabled={loading}
+          >
+            <FormSubmitBtn title="Add New" />
+          </TouchableOpacity>
           {error && <Text style={{ color: "red" }}>{error}</Text>}
         </View>
       </View>
