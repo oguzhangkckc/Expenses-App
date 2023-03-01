@@ -16,7 +16,7 @@ const UploadImage = () => {
 
   const addImage = async (imageUri) => {
     setLoading(true);
-    setError(null);
+    setError(null); 
   
     const formData = new FormData();
     formData.append("image", {
