@@ -24,7 +24,7 @@ const UploadImage = () => {
       type: "image/jpeg",
       name: new Date() + "_image",
     });
-
+ 
     const xhr = new XMLHttpRequest();
     xhr.open("POST", `http://localhost:3000/image/add-image/${user.email}`);
     xhr.setRequestHeader("Authorization", `Bearer ${user.token}`);
