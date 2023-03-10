@@ -4,13 +4,13 @@ import { useNavigation } from "@react-navigation/native";
 import { UseAuthContext } from "../hooks/UseAuthContext";
 
 const Expenses = () => {
+
   const { dispatch } = UseAuthContext();
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState(null);
   const [name, setName] = useState("");
   const [amount, setAmount] = useState("");
-  const [id, setId] = useState("");
   const [description, setDescription] = useState("");
 
   const navigation = useNavigation();
@@ -42,7 +42,7 @@ const Expenses = () => {
     setLoading(true);
     setError(null);
 
-    const response = await fetch(`http://localhost:3000/${id}`, {
+    const response = await fetch(`http://localhost:3000/delete/${id}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -98,7 +98,7 @@ const Expenses = () => {
     setLoading(true);
     setError(null);
 
-    const response = await fetch(`http://localhost:3000/${data.id}`, {
+    const response = await fetch(`http://localhost:3000/update/${data.id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -131,16 +131,16 @@ const Expenses = () => {
     deleteExp,
     addExp,
     updateExp,
-    error,
-    loading,
-    data,
     setData,
-    name,
-    amount,
-    description,
     setName,
     setAmount,
     setDescription,
+    error,
+    loading,
+    data,
+    name,
+    amount,
+    description,
   };
 };
 

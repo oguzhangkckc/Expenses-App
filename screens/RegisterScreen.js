@@ -6,7 +6,7 @@ import {
   View,
   TextInput,
 } from "react-native";
-import React, { useState } from "react";
+import React from "react";
 import { useNavigation } from "@react-navigation/native";
 
 import FormSubmitBtn from "../components/FormSubmitBtn";

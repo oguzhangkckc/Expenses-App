@@ -1,71 +1,62 @@
 import { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 
-import { UseAuthContext } from "../hooks/UseAuthContext";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { UseAuthContext } from "../hooks/UseAuthContext";
 
-const Register = () => {
-  const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(null);
+const ResetPassword = () => {
   const { dispatch } = UseAuthContext();
-  const [fullname, setFullname] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
   const navigation = useNavigation();
 
-  const signUp = async (data) => {
+  const resetPassword = async (data) => {
     setLoading(true);
     setError(null);
 
-    const response = await fetch("http://localhost:3000/register", {
+    const response = await fetch("http://localhost:3000/reset-password", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(data),
     });
-
     const json = await response.json();
-
+    console.log(json);
     if (!response.ok) {
       setLoading(false);
-      setError(json.error);
-      if (!fullname || !email || !password || !confirmPassword) {
+      setError(json.message);
+      if (!email || !password) {
         setError("Please fill all fields");
       }
-    }
-    if (json.error === "User already exists") {
-      navigation.navigate("Login");
-      alert("User already exists");
+      if (password !== confirmPassword) {
+        setError("Passwords do not match");
+      }
     }
     if (response.ok) {
-      await AsyncStorage.setItem("user", JSON.stringify(json));
       setError(null);
-      dispatch({ type: "LOGIN", payload: json });
+      await AsyncStorage.setItem("user", JSON.stringify(json));
       setLoading(false);
-      setFullname(json.fullname);
       setEmail(json.email);
       setPassword(json.password);
-      navigation.navigate("Main");
+      navigation.navigate("Login");
     }
   };
-
-
   return {
-    signUp,
+    resetPassword,
     error,
     loading,
-    fullname,
     email,
     password,
-    setFullname,
+    confirmPassword,
     setEmail,
     setPassword,
-    confirmPassword,
     setConfirmPassword,
   };
 };
 
-export default Register;
+export default ResetPassword;

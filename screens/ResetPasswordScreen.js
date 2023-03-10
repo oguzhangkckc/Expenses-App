@@ -1,37 +1,41 @@
 import {
   View,
-  Dimensions,
-  StyleSheet,
   Text,
-  Pressable,
+  StyleSheet,
+  Dimensions,
   TextInput,
+  TouchableOpacity,
 } from "react-native";
 import React from "react";
-import { useNavigation } from "@react-navigation/native";
 
-
-import Login from "../components/Login";
 import FormSubmitBtn from "../components/FormSubmitBtn";
-import { TouchableOpacity } from "react-native-gesture-handler";
+import ResetPassword from "../components/ResetPassword";
 
-export default function LogInScreen() {
-  
-  const {signIn, error, isLoading, email, password, setEmail, setPassword} = Login();
-
-  const navigation = useNavigation();
+export default function ResetPasswordScreen() {
+  const {
+    resetPassword,
+    error,
+    isLoading,
+    email,
+    setEmail,
+    password,
+    setPassword,
+    confirmPassword,
+    setConfirmPassword,
+  } = ResetPassword();
 
   return (
     <View style={styles.container}>
       <Text style={styles.welcome}>Welcome Back</Text>
       <View style={styles.login}>
         <View style={styles.inputView}>
-          <Text style={styles.textInput}>Login</Text>
+          <Text style={styles.textInput}>Reset Password</Text>
           <View style={{ marginBottom: 30 }}>
             <Text style={styles.headText}>Email</Text>
             <TextInput
               style={styles.loginInput}
-              value={email}
               autoCapitalize="none"
+              value={email}
               onChangeText={setEmail}
               placeholderTextColor="white"
               placeholder="Example@email.com"
@@ -39,26 +43,33 @@ export default function LogInScreen() {
             <Text style={styles.headText}>Password</Text>
             <TextInput
               style={styles.loginInput}
-              value={password}
               autoCapitalize="none"
+              value={password}
               onChangeText={setPassword}
               placeholderTextColor="white"
               secureTextEntry={true}
               placeholder="********"
             />
+            <Text style={styles.headText}>Confirm Password</Text>
+            <TextInput
+              style={styles.loginInput}
+              autoCapitalize="none"
+              value={confirmPassword}
+              onChangeText={setConfirmPassword}
+              placeholderTextColor="white"
+              secureTextEntry={true}
+              placeholder="********"
+            />
+
+            <TouchableOpacity
+              disabled={isLoading}
+              onPress={() =>
+                resetPassword({ email, password, confirmPassword })
+              }
+            >
+              <FormSubmitBtn title="Submit" />
+            </TouchableOpacity>
           </View>
-          <TouchableOpacity onPress={() => navigation.navigate("ResetPassword")}>
-          <Text>Did you forget your password?</Text>
-          </TouchableOpacity>
-          <TouchableOpacity disabled={isLoading} onPress={() => signIn({email, password})} >
-          <FormSubmitBtn title="Login" />
-          </TouchableOpacity>
-          <Pressable
-            style={{ marginTop: 20 }}
-            onPress={() => navigation.navigate("Register")}
-          >
-            <Text>Create an account!</Text>
-          </Pressable>
           {error && <Text style={{ color: "red" }}>{error}</Text>}
         </View>
       </View>
@@ -69,7 +80,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#cfeffd",
-    paddingTop: 180,
+    paddingTop: 100,
     alignItems: "center",
   },
   login: {
