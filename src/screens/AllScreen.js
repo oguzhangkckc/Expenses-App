@@ -15,7 +15,7 @@ export default function AllScreen({ navigation }) {
 
   useEffect(() => {
     getExp();
-  }, []);
+  }, [data]);
 
   function ListEmptyComponent() {
     return (

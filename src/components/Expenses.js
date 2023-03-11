@@ -19,7 +19,7 @@ const Expenses = () => {
     setLoading(true);
     setError(null);
 
-    const response = await fetch("http://localhost:3000/get-expense", {
+    const response = await fetch("http://localhost:3000/input/get-expense", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -42,7 +42,7 @@ const Expenses = () => {
     setLoading(true);
     setError(null);
 
-    const response = await fetch(`http://localhost:3000/delete/${id}`, {
+    const response = await fetch(`http://localhost:3000/input/delete/${id}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -66,7 +66,7 @@ const Expenses = () => {
     setLoading(true);
     setError(null);
 
-    const response = await fetch("http://localhost:3000/add-expense", {
+    const response = await fetch("http://localhost:3000/input/add-expense", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -98,7 +98,7 @@ const Expenses = () => {
     setLoading(true);
     setError(null);
 
-    const response = await fetch(`http://localhost:3000/update/${data.id}`, {
+    const response = await fetch(`http://localhost:3000/input/update/${data.id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",

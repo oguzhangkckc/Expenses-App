@@ -19,7 +19,7 @@ const Register = () => {
     setLoading(true);
     setError(null);
 
-    const response = await fetch("http://localhost:3000/register", {
+    const response = await fetch("http://localhost:3000/user/register", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

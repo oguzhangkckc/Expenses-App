@@ -15,7 +15,7 @@ export default function RecentScreen({ navigation }) {
 
   useEffect(() => {
     getExp();
-  }, []);
+  }, [data]);
 
   const recentExp = () => {
     const today = new Date();

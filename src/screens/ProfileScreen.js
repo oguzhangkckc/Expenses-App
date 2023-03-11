@@ -36,8 +36,7 @@ export default function ProfileScreen() {
   return (
     <View style={styles.container}>
       <View style={styles.texts}>
-        <Text style={styles.fullname}> {user.token}</Text>
-        <Text style={styles.email}>{user.email}</Text>
+        <Text style={styles.fullname}>{user.email}</Text>
       </View>
       <View>
         <Ionicons name="person" size={200} color="white" />
