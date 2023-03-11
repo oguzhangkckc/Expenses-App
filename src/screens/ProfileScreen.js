@@ -1,14 +1,14 @@
 import { useEffect } from "react";
 import { View, Text, StyleSheet, Alert } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
+import { UseAuthContext } from "../hooks/UseAuthContext";
 
-import UserProfile from "../components/UserProfile";
 import { useLogout } from "../components/Logout";
 import Expenses from "../components/Expenses";
 
 
 export default function ProfileScreen() {
-  const { getProfile, loading, error, fullname, email } = UserProfile();
+  const { user } = UseAuthContext();
   
   const { getExp, data } = Expenses();
 
@@ -20,10 +20,6 @@ export default function ProfileScreen() {
 
   useEffect(() => {
     getExp();
-  }, []);
-    
-  useEffect(() => {
-    getProfile("63fdd7d04fa3479a1b470251");
   }, []);
 
   const totalExp = () => {
@@ -39,10 +35,9 @@ export default function ProfileScreen() {
 
   return (
     <View style={styles.container}>
-      {error && <Text style={{ color: "red" }}>{error}</Text>}
       <View style={styles.texts}>
-        <Text style={styles.fullname}> {fullname}</Text>
-        <Text style={styles.email}>{email}</Text>
+        <Text style={styles.fullname}> {user.token}</Text>
+        <Text style={styles.email}>{user.email}</Text>
       </View>
       <View>
         <Ionicons name="person" size={200} color="white" />

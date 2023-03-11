@@ -83,12 +83,14 @@ export default function RegisterScreen() {
           >
             <FormSubmitBtn title="Register" />
           </TouchableOpacity>
-          <Pressable
-            style={{ marginTop: 20 }}
-            onPress={() => navigation.navigate("LogIn")}
-          >
-            <Text>Do you have an account? Login!</Text>
-          </Pressable>
+          <View style={{ flexDirection: "row", marginTop:20 }}>
+            <Text>Already have an account? </Text>
+            <Pressable
+              onPress={() => navigation.navigate("LogIn")}
+            >
+              <Text style={{ color: "white" }}>Log In!</Text>
+            </Pressable>
+          </View>
           {error && <Text style={{ color: "red" }}>{error}</Text>}
         </View>
       </View>

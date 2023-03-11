@@ -9,14 +9,13 @@ import {
 import React from "react";
 import { useNavigation } from "@react-navigation/native";
 
-
 import Login from "../components/Login";
 import FormSubmitBtn from "../components/FormSubmitBtn";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
 export default function LogInScreen() {
-  
-  const {signIn, error, isLoading, email, password, setEmail, setPassword} = Login();
+  const { signIn, error, isLoading, email, password, setEmail, setPassword } =
+    Login();
 
   const navigation = useNavigation();
 
@@ -47,18 +46,26 @@ export default function LogInScreen() {
               placeholder="********"
             />
           </View>
-          <TouchableOpacity onPress={() => navigation.navigate("ResetPassword")}>
-          <Text>Did you forget your password?</Text>
-          </TouchableOpacity>
-          <TouchableOpacity disabled={isLoading} onPress={() => signIn({email, password})} >
-          <FormSubmitBtn title="Login" />
-          </TouchableOpacity>
-          <Pressable
-            style={{ marginTop: 20 }}
-            onPress={() => navigation.navigate("Register")}
+          <TouchableOpacity
+          style={{marginBottom:20}}
+            onPress={() => navigation.navigate("ResetPassword")}
           >
-            <Text>Create an account!</Text>
-          </Pressable>
+            <Text>Did you forget your password?</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            disabled={isLoading}
+            onPress={() => signIn({ email, password })}
+          >
+            <FormSubmitBtn title="Login" />
+          </TouchableOpacity>
+          <View style={{ flexDirection: "row", marginTop:20 }}>
+            <Text>Don't have an account?</Text>
+            <Pressable
+              onPress={() => navigation.navigate("Register")}
+            >
+              <Text style={{ color: "white" }}> Sign Up</Text>
+            </Pressable>
+          </View>
           {error && <Text style={{ color: "red" }}>{error}</Text>}
         </View>
       </View>
