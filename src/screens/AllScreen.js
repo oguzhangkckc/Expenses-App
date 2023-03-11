@@ -8,8 +8,7 @@ import {
 import Ionicons from "react-native-vector-icons/Ionicons";
 import React, { useEffect } from "react";
 
-import Expenses from "../components/Expenses"; 
-
+import Expenses from "../components/Expenses";
 
 export default function AllScreen({ navigation }) {
   const { getExp, deleteExp, error, loading, data } = Expenses();
