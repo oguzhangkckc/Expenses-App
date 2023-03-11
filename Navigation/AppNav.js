@@ -14,7 +14,6 @@ import LogInScreen from "../screens/LogInScreen";
 import RegisterScreen from "../screens/RegisterScreen";
 import ResetPasswordScreen from "../screens/ResetPasswordScreen";
 import { UseAuthContext } from "../hooks/UseAuthContext";
-import { useLogout } from "../components/Logout";
 import ProfileScreen from "../screens/ProfileScreen";
 
 const Stack = createStackNavigator();
@@ -48,12 +47,6 @@ export default function App() {
 }
 
 function Tabs({ navigation}) {
-  const { user } = UseAuthContext();
-  const { logout } = useLogout();
-
-  const handleLogout = () => {
-    logout();
-  };
 
   return (
     <Tab.Navigator
@@ -126,26 +119,6 @@ function Tabs({ navigation}) {
         name="Profile"
         component={ProfileScreen}
         options={{
-          headerLeft: () => (
-            <Ionicons
-              name="log-out"
-              size={30}
-              color="white"
-              style={{ paddingLeft: 20 }}
-              onPress={() =>
-                Alert.alert("Are you sure you want to log out?", "", [
-                  {
-                    text: "Cancel",
-                    style: "cancel",
-                  },
-                  {
-                    text: "Log Out",
-                    onPress: () => handleLogout(),
-                  },
-                ])
-              }
-            />
-          ),
           headerStyle: { backgroundColor: "#003b88", height: 110 },
           headerTintColor: "white",
         }}

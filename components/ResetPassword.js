@@ -2,10 +2,8 @@ import { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { UseAuthContext } from "../hooks/UseAuthContext";
 
 const ResetPassword = () => {
-  const { dispatch } = UseAuthContext();
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState("");
@@ -14,7 +12,7 @@ const ResetPassword = () => {
 
   const navigation = useNavigation();
 
-  const resetPassword = async (data) => {
+  const resetPassword = async () => {
     setLoading(true);
     setError(null);
 
@@ -23,7 +21,13 @@ const ResetPassword = () => {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(data),
+      body: JSON.stringify(
+        {
+          email,
+          password,
+          confirmPassword,
+        },
+      ),
     });
     const json = await response.json();
     console.log(json);

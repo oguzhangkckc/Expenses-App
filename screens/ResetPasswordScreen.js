@@ -24,6 +24,7 @@ export default function ResetPasswordScreen() {
     setConfirmPassword,
   } = ResetPassword();
 
+
   return (
     <View style={styles.container}>
       <Text style={styles.welcome}>Welcome Back</Text>
@@ -40,27 +41,6 @@ export default function ResetPasswordScreen() {
               placeholderTextColor="white"
               placeholder="Example@email.com"
             />
-            <Text style={styles.headText}>Password</Text>
-            <TextInput
-              style={styles.loginInput}
-              autoCapitalize="none"
-              value={password}
-              onChangeText={setPassword}
-              placeholderTextColor="white"
-              secureTextEntry={true}
-              placeholder="********"
-            />
-            <Text style={styles.headText}>Confirm Password</Text>
-            <TextInput
-              style={styles.loginInput}
-              autoCapitalize="none"
-              value={confirmPassword}
-              onChangeText={setConfirmPassword}
-              placeholderTextColor="white"
-              secureTextEntry={true}
-              placeholder="********"
-            />
-
             <TouchableOpacity
               disabled={isLoading}
               onPress={() =>
