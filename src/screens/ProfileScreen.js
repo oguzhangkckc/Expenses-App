@@ -14,13 +14,10 @@ export default function ProfileScreen() {
 
   const { logout } = useLogout();
 
-  const handleLogout = () => {
-    logout();
-  };
 
   useEffect(() => {
     getExp();
-  }, []);
+  }, [data]);
 
   const totalExp = () => {
     let total = 0;
@@ -32,6 +29,15 @@ export default function ProfileScreen() {
     return total;
   };
 
+  if (user === null) {
+    return (
+      <View style={styles.container}>
+        <Text style={{ color: "white", fontSize: 20, fontWeight: "bold" }}>
+          Loading...
+        </Text>
+      </View>
+    );
+  }
 
   return (
     <View style={styles.container}>
@@ -58,7 +64,7 @@ export default function ProfileScreen() {
               },
               {
                 text: "Log Out",
-                onPress: () => handleLogout(),
+                onPress: () => logout(),
               },
             ])
           }

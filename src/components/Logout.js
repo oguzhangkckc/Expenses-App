@@ -13,8 +13,7 @@ export const useLogout = () => {
             console.log(e);
         }
         dispatch({ type: 'LOGOUT' });
-
     };
-
+    
     return { logout };
 }
