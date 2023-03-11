@@ -2,7 +2,6 @@ import {
   View,
   Text,
   StyleSheet,
-  Pressable,
   FlatList,
   TouchableOpacity,
 } from "react-native";

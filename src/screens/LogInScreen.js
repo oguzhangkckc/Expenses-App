@@ -14,8 +14,7 @@ import FormSubmitBtn from "../components/FormSubmitBtn";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
 export default function LogInScreen() {
-  const { signIn, error, isLoading, email, password, setEmail, setPassword } =
-    Login();
+  const { signIn, error, isLoading, email, password, setEmail, setPassword } = Login();
 
   const navigation = useNavigation();
 
