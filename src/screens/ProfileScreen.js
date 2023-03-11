@@ -4,9 +4,13 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 
 import UserProfile from "../components/UserProfile";
 import { useLogout } from "../components/Logout";
+import Expenses from "../components/Expenses";
+
 
 export default function ProfileScreen() {
   const { getProfile, loading, error, fullname, email } = UserProfile();
+  
+  const { getExp , amount, data } = Expenses();
 
   const { logout } = useLogout();
 
@@ -15,8 +19,23 @@ export default function ProfileScreen() {
   };
 
   useEffect(() => {
+    getExp();
+  }, []);
+    
+  useEffect(() => {
     getProfile("63fdd7d04fa3479a1b470251");
   }, []);
+
+  const totalExp = () => {
+    let total = 0;
+    if (data) {
+      data.map((item) => {
+        total += item.amount;
+      });
+    }
+    return total;
+  };
+
 
   return (
     <View style={styles.container}>
@@ -25,10 +44,16 @@ export default function ProfileScreen() {
         <Text style={styles.fullname}> {fullname}</Text>
         <Text style={styles.email}>{email}</Text>
       </View>
+      <View>
+        <Ionicons name="person" size={200} color="white" />
+      </View>
+      <View>
+        <Text style={styles.totalExp}>Total Exp : {totalExp()} $</Text>
+      </View>
       <View style={styles.icon}>
         <Ionicons
           name="log-out"
-          size={50}
+          size={40}
           color="white"
           style={{ paddingLeft: 20 }}
           onPress={() =>
@@ -74,5 +99,15 @@ const styles = StyleSheet.create({
     position: "absolute",
     top: 0,
     right: 0,
+  },
+  texts: {
+    position: "absolute",
+    top: 100,
+  },
+  totalExp: {
+    fontSize: 30,
+    color: "white",
+    fontWeight: "bold",
+    marginTop: 30,
   },
 });

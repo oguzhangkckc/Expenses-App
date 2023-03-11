@@ -9,12 +9,13 @@ const UserProfile = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const getProfile = async (user) => {
+
+  const getProfile = async (id) => {
     setLoading(true);
     setError(null);
 
     try {
-      const response = await fetch(`http://localhost:3000/user/${user}`, {
+      const response = await fetch(`http://localhost:3000/user/${id}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
