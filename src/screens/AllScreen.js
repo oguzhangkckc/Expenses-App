@@ -129,6 +129,15 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     marginTop: 10,
     padding: 10,
+    paddingHorizontal: 20,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 10,
+      height: 12,
+  },
+  shadowOpacity: 0.58,
+  shadowRadius: 16.0,
+  elevation: 24,
   },
   listdate: {
     color: "white",

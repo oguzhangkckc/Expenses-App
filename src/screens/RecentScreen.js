@@ -144,6 +144,14 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     marginTop: 10,
     padding: 10,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 1,
+      height: 12,
+  },
+  shadowOpacity: 0.58,
+  shadowRadius: 16.0,
+  elevation: 24,
   },
   listdate: {
     color: "white",
