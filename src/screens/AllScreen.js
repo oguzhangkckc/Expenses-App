@@ -4,6 +4,7 @@ import {
   FlatList,
   Text,
   TouchableOpacity,
+  Pressable,
 } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import React, { useEffect } from "react";
@@ -56,7 +57,7 @@ export default function AllScreen({ navigation }) {
                   onPress={() => deleteExp(item._id)}
                   disabled={loading}
                 >
-                  <Ionicons name="trash" size={25} color="white" />
+                    <Ionicons name="trash" size={25} color="white" />
                 </TouchableOpacity>
               </View>
             </View>
@@ -134,10 +135,10 @@ const styles = StyleSheet.create({
     shadowOffset: {
       width: 10,
       height: 12,
-  },
-  shadowOpacity: 0.58,
-  shadowRadius: 16.0,
-  elevation: 24,
+    },
+    shadowOpacity: 0.58,
+    shadowRadius: 16.0,
+    elevation: 24,
   },
   listdate: {
     color: "white",

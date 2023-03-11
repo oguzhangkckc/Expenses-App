@@ -4,7 +4,6 @@ import { useNavigation } from "@react-navigation/native";
 import { UseAuthContext } from "../hooks/UseAuthContext";
 
 const Expenses = () => {
-
   const { dispatch } = UseAuthContext();
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -12,9 +11,10 @@ const Expenses = () => {
   const [name, setName] = useState("");
   const [amount, setAmount] = useState("");
   const [description, setDescription] = useState("");
+  const { user } = UseAuthContext();
 
   const navigation = useNavigation();
-
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   const getExp = async () => {
     setLoading(true);
     setError(null);
@@ -23,6 +23,7 @@ const Expenses = () => {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${user.token}`,
       },
     });
     const json = await response.json();
@@ -32,36 +33,51 @@ const Expenses = () => {
     }
     if (response.ok) {
       dispatch({ type: "GET_EXPENSE", payload: json });
+
       setError(null);
       setData(json);
       setLoading(false);
     }
   };
-
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   const deleteExp = async (id) => {
     setLoading(true);
     setError(null);
+
+    if (!id) {
+      setError("Invalid expense id");
+      setLoading(false);
+      return;
+    }
 
     const response = await fetch(`http://localhost:3000/input/delete/${id}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${user.token}`,
       },
     });
-    const json = await response.json();
-    console.log(json);
-    if (!response.ok) {
-      setLoading(false);
-      setError(json.message);
-    }
-    if (response.ok) {
-      dispatch({ type: "DELETE_EXPENSE", payload: json });
-      setError(null);
-      setData(json);
-      setLoading(false);
-    }
-  };
 
+    if (!response || !response.status) {
+      setError("Network error");
+      setLoading(false);
+      return;
+    }
+
+    const json = await response.json();
+
+    if (response.status !== 201) {
+      setError(json.message);
+      setLoading(false);
+      return;
+    }
+
+    dispatch({ type: "DELETE_EXPENSE", payload: json });
+    setError(null);
+    setData(json);
+    setLoading(false);
+  };
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   const addExp = async (data) => {
     setLoading(true);
     setError(null);
@@ -70,6 +86,7 @@ const Expenses = () => {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${user.token}`,
       },
       body: JSON.stringify(data),
     });
@@ -93,18 +110,22 @@ const Expenses = () => {
       navigation.goBack();
     }
   };
-
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   const updateExp = async (data) => {
     setLoading(true);
     setError(null);
 
-    const response = await fetch(`http://localhost:3000/input/update/${data.id}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    });
+    const response = await fetch(
+      `http://localhost:3000/input/update/${data.id}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${user.token}`,
+        },
+        body: JSON.stringify(data),
+      }
+    );
     const json = await response.json();
     console.log(json);
     if (!response.ok) {
@@ -125,7 +146,7 @@ const Expenses = () => {
       navigation.goBack();
     }
   };
-
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   return {
     getExp,
     deleteExp,

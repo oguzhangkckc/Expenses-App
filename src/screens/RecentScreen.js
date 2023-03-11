@@ -2,6 +2,7 @@ import {
   View,
   Text,
   StyleSheet,
+  Pressable,
   FlatList,
   TouchableOpacity,
 } from "react-native";
@@ -27,7 +28,6 @@ export default function RecentScreen({ navigation }) {
           recent.push(item);
         }
       });
-
     }
     return recent;
   };
@@ -148,10 +148,10 @@ const styles = StyleSheet.create({
     shadowOffset: {
       width: 1,
       height: 12,
-  },
-  shadowOpacity: 0.58,
-  shadowRadius: 16.0,
-  elevation: 24,
+    },
+    shadowOpacity: 0.58,
+    shadowRadius: 16.0,
+    elevation: 24,
   },
   listdate: {
     color: "white",
