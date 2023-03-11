@@ -9,7 +9,7 @@ import {
 import React from "react";
 
 import FormSubmitBtn from "../components/FormSubmitBtn";
-import ResetPassword from "../components/ResetPassword";
+import ResetPassword from "../components/user/ResetPassword";
 
 export default function ResetPasswordScreen() {
   const {

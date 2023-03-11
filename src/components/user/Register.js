@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 
-import { UseAuthContext } from "../hooks/UseAuthContext";
+import { UseAuthContext } from "../../hooks/UseAuthContext";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Register = () => {

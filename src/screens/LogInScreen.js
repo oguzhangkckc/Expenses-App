@@ -9,7 +9,7 @@ import {
 import React from "react";
 import { useNavigation } from "@react-navigation/native";
 
-import Login from "../components/Login";
+import Login from "../components/user/Login";
 import FormSubmitBtn from "../components/FormSubmitBtn";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
@@ -119,6 +119,6 @@ const styles = StyleSheet.create({
     height: 40,
     borderRadius: 10,
     paddingHorizontal: 10,
-    marginBottom: 20,
+    marginBottom: 10,
   },
 });

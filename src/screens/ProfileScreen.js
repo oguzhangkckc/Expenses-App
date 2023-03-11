@@ -3,8 +3,8 @@ import { View, Text, StyleSheet, Alert } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { UseAuthContext } from "../hooks/UseAuthContext";
 
-import { useLogout } from "../components/Logout";
-import Expenses from "../components/Expenses";
+import { useLogout } from "../components/user/Logout";
+import Expenses from "../components/expenses/Expenses";
 
 
 export default function ProfileScreen() {

@@ -1,5 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { UseAuthContext } from '../hooks/UseAuthContext';
+import { UseAuthContext } from '../../hooks/UseAuthContext';
 
 
 export const useLogout = () => {

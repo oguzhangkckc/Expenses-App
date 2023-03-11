@@ -12,46 +12,40 @@ const ResetPassword = () => {
 
   const navigation = useNavigation();
 
-  const resetPassword = async () => {
+  const confirmEmail = async (email) => { 
     setLoading(true);
     setError(null);
 
-    const response = await fetch("http://localhost:3000/user/reset-password", {
+    const response = await fetch("http://localhost:3000/user/confirm-email", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(
-        {
-          email,
-          password,
-          confirmPassword,
-        },
-      ),
+      body: JSON.stringify({ email }),
     });
+
+    if (!response || !response.status) {
+      setError("Network error");
+      setLoading(false);
+      return;
+    }
+
     const json = await response.json();
-    console.log(json);
-    if (!response.ok) {
-      setLoading(false);
+
+    if (response.status !== 201) {
       setError(json.message);
-      if (!email || !password) {
-        setError("Please fill all fields");
-      }
-      if (password !== confirmPassword) {
-        setError("Passwords do not match");
-      }
-    }
-    if (response.ok) {
-      setError(null);
-      await AsyncStorage.setItem("user", JSON.stringify(json));
       setLoading(false);
-      setEmail(json.email);
-      setPassword(json.password);
-      navigation.navigate("Login");
+      return;
     }
+
+    setError(null);
+    setLoading(false);
+    navigation.navigate("ResetPassword", { email });
   };
+  
+
   return {
-    resetPassword,
+    
     error,
     loading,
     email,
