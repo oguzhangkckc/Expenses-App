@@ -17,6 +17,21 @@ export default function RecentScreen({ navigation }) {
     getExp();
   }, []);
 
+  const recentExp = () => {
+    const today = new Date();
+    const recent = [];
+    if (data) {
+      data.map((item) => {
+        const date = new Date(item.createdAt);
+        if (date.getMonth() === today.getMonth()) {
+          recent.push(item);
+        }
+      });
+
+    }
+    return recent;
+  };
+
   function ListEmptyComponent() {
     return (
       <View>
@@ -37,7 +52,7 @@ export default function RecentScreen({ navigation }) {
       {error && <Text style={{ color: "red" }}>{error}</Text>}
       <FlatList
         showsVerticalScrollIndicator={false}
-        data={data}
+        data={recentExp()}
         keyExtractor={(item) => item._id}
         ListEmptyComponent={ListEmptyComponent}
         renderItem={({ item }) => (

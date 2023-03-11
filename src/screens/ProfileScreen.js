@@ -10,7 +10,7 @@ import Expenses from "../components/Expenses";
 export default function ProfileScreen() {
   const { getProfile, loading, error, fullname, email } = UserProfile();
   
-  const { getExp , amount, data } = Expenses();
+  const { getExp, data } = Expenses();
 
   const { logout } = useLogout();
 
@@ -88,17 +88,16 @@ const styles = StyleSheet.create({
     fontSize: 30,
     color: "white",
     fontWeight: "bold",
-    marginBottom: 10,
+    marginBottom: 20,
   },
   email: {
     fontSize: 20,
     color: "white",
-    marginBottom: 20,
   },
   icon: {
-    position: "absolute",
-    top: 0,
-    right: 0,
+    alignItems: "center",
+    justifyContent: "center",
+    paddingTop: 20,
   },
   texts: {
     position: "absolute",
@@ -108,6 +107,6 @@ const styles = StyleSheet.create({
     fontSize: 30,
     color: "white",
     fontWeight: "bold",
-    marginTop: 30,
+    marginTop: 20,
   },
 });
