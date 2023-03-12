@@ -29,6 +29,12 @@ const Login = () => {
     if (!response.ok) {
       setLoading(false);
       setError(json.message);
+      if (password === "") {
+        setError("Password is required");
+      }
+      if (email === "") {
+        setError("Email is required");
+      }
     }
     if (response.ok) {
       setError(null);

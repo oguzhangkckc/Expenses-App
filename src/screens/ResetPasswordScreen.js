@@ -4,16 +4,16 @@ import {
   StyleSheet,
   Dimensions,
   TextInput,
-  TouchableOpacity,
 } from "react-native";
 import React from "react";
 
+import { TouchableOpacity } from "react-native-gesture-handler";
 import FormSubmitBtn from "../components/FormSubmitBtn";
 import ResetPassword from "../components/user/ResetPassword";
 
 export default function ResetPasswordScreen() {
   const {
-    resetPassword,
+    handleResetPassword,
     error,
     isLoading,
     email,
@@ -41,28 +41,30 @@ export default function ResetPasswordScreen() {
               placeholderTextColor="white"
               placeholder="Example@email.com"
             />
-            <Text style={styles.headText}>Password</Text>
+            <Text style={styles.headText}>New Password</Text>
             <TextInput
               style={styles.loginInput}
-              autoCapitalize="none"
               value={password}
+              autoCapitalize="none"
               onChangeText={setPassword}
               placeholderTextColor="white"
-              placeholder="Example@email.com"
+              secureTextEntry={true}
+              placeholder="********"
             />
-            <Text style={styles.headText}>Confirm Password</Text>
+            <Text style={styles.headText}>Confirm New Password</Text>
             <TextInput
               style={styles.loginInput}
-              autoCapitalize="none"
               value={confirmPassword}
+              autoCapitalize="none"
               onChangeText={setConfirmPassword}
               placeholderTextColor="white"
-              placeholder="Example@email.com"
+              secureTextEntry={true}
+              placeholder="********"
             />
             <TouchableOpacity
               disabled={isLoading}
               onPress={() =>
-                resetPassword({ email, password, confirmPassword })
+                handleResetPassword({ email, password, confirmPassword })
               }
             >
               <FormSubmitBtn title="Submit" />

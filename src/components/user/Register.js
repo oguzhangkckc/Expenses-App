@@ -3,7 +3,6 @@ import { useNavigation } from "@react-navigation/native";
 
 import { UseAuthContext } from "../../hooks/UseAuthContext";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { set } from "react-native-reanimated";
 
 const Register = () => {
   const [error, setError] = useState(null);
