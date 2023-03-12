@@ -5,26 +5,26 @@ import {
   Text,
   View,
   TextInput,
-  TouchableOpacity
 } from "react-native";
-import React from "react";
+import React, {useState} from "react";
 import { useNavigation } from "@react-navigation/native";
 
 import FormSubmitBtn from "../components/FormSubmitBtn";
 import Register from "../components/user/Register";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 export default function RegisterScreen() {
   const {
-    signUp,
+    register,
     error,
-    isLoading,
+    loading,
     fullname,
-    email,
-    password,
-    confirmPassword,
     setFullname,
+    email,
     setEmail,
+    password,
     setPassword,
+    confirmPassword,
     setConfirmPassword,
   } = Register();
 
@@ -78,16 +78,14 @@ export default function RegisterScreen() {
             />
           </View>
           <TouchableOpacity
-            onPress={() => signUp({ fullname, email, password })}
-            disabled={isLoading}
+            onPress={() => register({ fullname, email, password, confirmPassword })}
+            disabled={loading}
           >
             <FormSubmitBtn title="Register" />
           </TouchableOpacity>
-          <View style={{ flexDirection: "row", marginTop:20 }}>
+          <View style={{ flexDirection: "row", marginTop: 20 }}>
             <Text>Already have an account? </Text>
-            <Pressable
-              onPress={() => navigation.navigate("LogIn")}
-            >
+            <Pressable onPress={() => navigation.navigate("LogIn")}>
               <Text style={{ color: "white" }}>Log In!</Text>
             </Pressable>
           </View>

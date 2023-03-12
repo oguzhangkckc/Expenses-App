@@ -41,6 +41,24 @@ export default function ResetPasswordScreen() {
               placeholderTextColor="white"
               placeholder="Example@email.com"
             />
+            <Text style={styles.headText}>Password</Text>
+            <TextInput
+              style={styles.loginInput}
+              autoCapitalize="none"
+              value={password}
+              onChangeText={setPassword}
+              placeholderTextColor="white"
+              placeholder="Example@email.com"
+            />
+            <Text style={styles.headText}>Confirm Password</Text>
+            <TextInput
+              style={styles.loginInput}
+              autoCapitalize="none"
+              value={confirmPassword}
+              onChangeText={setConfirmPassword}
+              placeholderTextColor="white"
+              placeholder="Example@email.com"
+            />
             <TouchableOpacity
               disabled={isLoading}
               onPress={() =>

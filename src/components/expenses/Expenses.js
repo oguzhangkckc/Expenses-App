@@ -35,7 +35,6 @@ const Expenses = () => {
     }
     if (response.ok) {
       dispatch({ type: "GET_EXPENSE", payload: json });
-
       setError(null);
       setData(json);
       setLoading(false);

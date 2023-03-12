@@ -32,6 +32,7 @@ export default function LogInScreen() {
               autoCapitalize="none"
               onChangeText={setEmail}
               placeholderTextColor="white"
+              keyboardType="email-address"
               placeholder="Example@email.com"
             />
             <Text style={styles.headText}>Password</Text>
@@ -46,7 +47,7 @@ export default function LogInScreen() {
             />
           </View>
           <TouchableOpacity
-          style={{marginBottom:20}}
+            style={{ marginBottom: 20 }}
             onPress={() => navigation.navigate("ResetPassword")}
           >
             <Text>Did you forget your password?</Text>
@@ -57,11 +58,9 @@ export default function LogInScreen() {
           >
             <FormSubmitBtn title="Login" />
           </TouchableOpacity>
-          <View style={{ flexDirection: "row", marginTop:20 }}>
+          <View style={{ flexDirection: "row", marginTop: 20 }}>
             <Text>Don't have an account?</Text>
-            <Pressable
-              onPress={() => navigation.navigate("Register")}
-            >
+            <Pressable onPress={() => navigation.navigate("Register")}>
               <Text style={{ color: "white" }}> Sign Up</Text>
             </Pressable>
           </View>
