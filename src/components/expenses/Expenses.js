@@ -5,13 +5,13 @@ import { UseAuthContext } from "../../hooks/UseAuthContext";
 
 const Expenses = () => {
   const { dispatch } = UseAuthContext();
+  const { user } = UseAuthContext();
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState(null);
   const [name, setName] = useState("");
   const [amount, setAmount] = useState("");
   const [description, setDescription] = useState("");
-  const { user } = UseAuthContext();
 
   const navigation = useNavigation();
 

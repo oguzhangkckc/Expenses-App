@@ -1,23 +1,36 @@
 import { useEffect } from "react";
-import { View, Text, StyleSheet, Alert } from "react-native";
+import { View, Text, StyleSheet, Alert, Image } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { UseAuthContext } from "../hooks/UseAuthContext";
+import * as ImagePicker from "expo-image-picker";
 
 import { useLogout } from "../components/user/Logout";
 import Expenses from "../components/expenses/Expenses";
-
+import { TouchableOpacity } from "react-native-gesture-handler";
+import UploadImage from "../components/user/UploadImage";
 
 export default function ProfileScreen() {
   const { user } = UseAuthContext();
-  
+  const { addImage, error, image, setImage, progress } = UploadImage();
   const { getExp, data } = Expenses();
-
   const { logout } = useLogout();
-
 
   useEffect(() => {
     getExp();
   }, [data]);
+
+  const pickImage = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+
+    if (!result.canceled) {
+      setImage(result.assets[0].uri);
+    }
+  };
 
   const totalExp = () => {
     let total = 0;
@@ -45,7 +58,30 @@ export default function ProfileScreen() {
         <Text style={styles.fullname}>{user.email}</Text>
       </View>
       <View>
-        <Ionicons name="person" size={200} color="white" />
+        {error && <Text style={{ color: "red" }}>{error}</Text>}
+        <TouchableOpacity onPress={pickImage}>
+          {image ? (
+            <Image style={styles.image} source={{ uri: image }} />
+          ) : (
+            <View style={styles.uploadView}>
+              <Text style={styles.uploadText}>Upload Profile</Text>
+              <Text style={styles.uploadText}>Picture</Text>
+            </View>
+          )}
+        </TouchableOpacity>
+        {progress > 0 && (
+          <Text style={{ color: "white", fontSize: 20, fontWeight: "bold" }}>
+            {progress}% uploaded
+          </Text>
+        )}
+        <View>
+          <TouchableOpacity
+            style={styles.uploadBtn}
+            onPress={() => addImage(image)}
+          >
+            <Text style={styles.uploadText}>Upload</Text>
+          </TouchableOpacity>
+        </View>
       </View>
       <View>
         <Text style={styles.totalExp}>Total Exp : {totalExp()} $</Text>
@@ -83,6 +119,39 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     backgroundColor: "#1aacf0",
+  },
+  image: {
+    width: 200,
+    height: 200,
+    borderRadius: 100,
+  },
+  uploadBtn: {
+    width: 200,
+    height: 50,
+    borderRadius: 100,
+    backgroundColor: "#1aacf0",
+    alignItems: "center",
+    justifyContent: "center",
+    borderWidth: 2,
+    borderColor: "white",
+    marginTop: 20,
+  },
+  uploadView: {
+    width: 200,
+    height: 200,
+    borderRadius: 100,
+    backgroundColor: "#1aacf0",
+    alignItems: "center",
+    justifyContent: "center",
+    borderWidth: 2,
+    borderColor: "white",
+    borderStyle: "dashed",
+  },
+  uploadText: {
+    color: "white",
+    fontSize: 20,
+    opacity: 0.7,
+    fontWeight: "bold",
   },
   fullname: {
     fontSize: 30,
