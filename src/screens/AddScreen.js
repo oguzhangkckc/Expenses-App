@@ -3,11 +3,12 @@ import React from "react";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
 import FormSubmitBtn from "../components/FormSubmitBtn";
-import Expenses from "../components/expenses/Expenses";
+import Expenses from "../services/expenses/Expenses";
 
 export default function AddScreen() {
   const {
     addExp,
+    getExp,
     error,
     loading,
     name,
@@ -18,6 +19,11 @@ export default function AddScreen() {
     setDescription,
   } = Expenses();
   console.log(name, amount, description);
+
+const submitHandler = (name, amount, description) => {
+  addExp({ name, amount, description });
+  getExp();
+};
 
   return (
     <View style={styles.container}>

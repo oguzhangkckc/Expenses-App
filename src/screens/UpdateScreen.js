@@ -3,7 +3,7 @@ import React from "react";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
 import FormSubmitBtn from "../components/FormSubmitBtn";
-import Expenses from "../components/expenses/Expenses";
+import Expenses from "../services/expenses/Expenses";
 
 export default function UpdateScreen(props) {
   const id = props.route.params;

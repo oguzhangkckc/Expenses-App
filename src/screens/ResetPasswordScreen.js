@@ -9,7 +9,7 @@ import React from "react";
 
 import { TouchableOpacity } from "react-native-gesture-handler";
 import FormSubmitBtn from "../components/FormSubmitBtn";
-import ResetPassword from "../components/user/ResetPassword";
+import ResetPassword from "../services/user/ResetPassword";
 
 export default function ResetPasswordScreen() {
   const {

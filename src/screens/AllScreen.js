@@ -3,12 +3,12 @@ import {
   StyleSheet,
   FlatList,
   Text,
-  TouchableOpacity,
 } from "react-native";
+import { TouchableOpacity } from "react-native-gesture-handler";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import React, { useEffect } from "react";
 
-import Expenses from "../components/expenses/Expenses";
+import Expenses from "../services/expenses/Expenses";
 
 export default function AllScreen({ navigation }) {
   const { getExp, deleteExp, error, loading, data } = Expenses();
@@ -53,8 +53,8 @@ export default function AllScreen({ navigation }) {
               </View>
               <View style={styles.deleteView}>
                 <TouchableOpacity
-                  onPress={() => deleteExp(item._id)}
                   disabled={loading}
+                  onPress={() => deleteExp(item._id)}
                 >
                     <Ionicons name="trash" size={25} color="white" />
                 </TouchableOpacity>

@@ -4,8 +4,7 @@ import { useNavigation } from "@react-navigation/native";
 import { UseAuthContext } from "../../hooks/UseAuthContext";
 
 const Expenses = () => {
-  const { dispatch } = UseAuthContext();
-  const { user } = UseAuthContext();
+  const { dispatch, user } = UseAuthContext();
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState(null);

@@ -8,7 +8,7 @@ import {
 import React, { useEffect } from "react";
 import Ionicons from "react-native-vector-icons/Ionicons";
 
-import Expenses from "../components/expenses/Expenses";
+import Expenses from "../services/expenses/Expenses";
 
 export default function RecentScreen({ navigation }) {
   const { getExp, deleteExp, error, loading, data } = Expenses();

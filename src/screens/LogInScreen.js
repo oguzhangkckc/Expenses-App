@@ -9,7 +9,7 @@ import {
 import React from "react";
 import { useNavigation } from "@react-navigation/native";
 
-import Login from "../components/user/Login";
+import Login from "../services/user/Login";
 import FormSubmitBtn from "../components/FormSubmitBtn";
 import { TouchableOpacity } from "react-native-gesture-handler";
 

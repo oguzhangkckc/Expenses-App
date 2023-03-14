@@ -6,11 +6,11 @@ import {
   View,
   TextInput,
 } from "react-native";
-import React, {useState} from "react";
+import React from "react";
 import { useNavigation } from "@react-navigation/native";
 
 import FormSubmitBtn from "../components/FormSubmitBtn";
-import Register from "../components/user/Register";
+import Register from "../services/user/Register";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
 export default function RegisterScreen() {

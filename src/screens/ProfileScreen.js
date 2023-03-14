@@ -4,10 +4,10 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import { UseAuthContext } from "../hooks/UseAuthContext";
 import * as ImagePicker from "expo-image-picker";
 
-import { useLogout } from "../components/user/Logout";
-import Expenses from "../components/expenses/Expenses";
+import { useLogout } from "../services/user/Logout";
+import Expenses from "../services/expenses/Expenses";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import UploadImage from "../components/user/UploadImage";
+import UploadImage from "../services/user/UploadImage";
 
 export default function ProfileScreen() {
   const { user } = UseAuthContext();
