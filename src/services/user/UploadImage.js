@@ -2,14 +2,12 @@ import { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 
 import { UseAuthContext } from "../../hooks/UseAuthContext";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const UploadImage = () => {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(null);
   const [image, setImage] = useState(null);
   const [progress, setProgress] = useState(0);
-  const { dispatch } = UseAuthContext();
   const { user } = UseAuthContext();
 
   const navigation = useNavigation();
@@ -48,9 +46,7 @@ const UploadImage = () => {
       console.log("resim yüklenemedi")
     }
     if (response.ok) {
-      await AsyncStorage.setItem("user", JSON.stringify(json));
       setError(null);
-      dispatch({ type: "LOGIN", payload: json });
       setLoading(false);
       setImage(json.image);
       navigation.navigate("Profile");
@@ -58,8 +54,33 @@ const UploadImage = () => {
     }
   };
 
+  const getImage = async (data) => {
+    setLoading(true);
+    setError(null);
+
+    const response = await fetch(`http://localhost:3000/image/${data.id}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
+    const json = await response.json();
+    if (!response.ok) {
+      setLoading(false);
+      setError(json.message);
+    }
+    if (response.ok) {
+      setError(null);
+      setImage(json);
+      setLoading(false);
+    }
+  };
+
+
   return {
     addImage,
+    getImage,
     error,
     loading,
     image,
