@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { View, Text, StyleSheet, Alert, Image } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { UseAuthContext } from "../hooks/UseAuthContext";
@@ -11,14 +11,15 @@ import UploadImage from "../services/user/UploadImage";
 
 export default function ProfileScreen() {
   const { user } = UseAuthContext();
-  const { addImage, error, image, setImage, progress } = UploadImage();
+  const { addImage, getImage, error, image, setImage, progress, imageUrl} = UploadImage();
   const { getExp, data } = Expenses();
   const { logout } = useLogout();
 
-
   useEffect(() => {
     getExp();
-  }, [data]);
+    getImage();
+  }, []);
+
 
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -61,14 +62,16 @@ export default function ProfileScreen() {
       <View>
         {error && <Text style={{ color: "red" }}>{error}</Text>}
         <TouchableOpacity onPress={pickImage}>
-          {image ? (
-            <Image style={styles.image} source={{uri: image}} />
-          ) : (
-            <View style={styles.uploadView}>
-              <Text style={styles.uploadText}>Upload Profile</Text>
-              <Text style={styles.uploadText}>Picture</Text>
-            </View>
-          )}
+          <View style={styles.uploadView}>
+            {imageUrl ? (
+              <Image style={styles.image} source={{ uri: imageUrl }} />
+            ) : (
+              <View style={styles.uploadView}>
+                <Text style={styles.uploadText}>Upload Profile</Text>
+                <Text style={styles.uploadText}>Picture</Text>
+              </View>
+            )}
+          </View>
         </TouchableOpacity>
         {progress > 0 && (
           <Text style={{ color: "white", fontSize: 20, fontWeight: "bold" }}>
@@ -122,8 +125,8 @@ const styles = StyleSheet.create({
     backgroundColor: "#1aacf0",
   },
   image: {
-    width: 200,
-    height: 200,
+    width: "100%",
+    height: "100%",
     borderRadius: 100,
   },
   uploadBtn: {

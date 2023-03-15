@@ -9,6 +9,7 @@ const UploadImage = () => {
   const [image, setImage] = useState(null);
   const [progress, setProgress] = useState(0);
   const { user } = UseAuthContext();
+  const [imageUrl, setImageUrl] = useState(null);
 
   const navigation = useNavigation();
 
@@ -23,7 +24,7 @@ const UploadImage = () => {
       name: new Date() + "_image",
     });
 
-    const response = await fetch("http://localhost:3000/image/add-image", {
+    const response = await fetch(`http://localhost:3000/image/add-image/${user.email}`, {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -54,28 +55,30 @@ const UploadImage = () => {
     }
   };
 
-  const getImage = async (data) => {
+  const getImage = async () => {
     setLoading(true);
     setError(null);
-
-    const response = await fetch(`http://localhost:3000/image/${data.id}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${user.token}`,
-      },
-    });
-    const json = await response.json();
-    if (!response.ok) {
-      setLoading(false);
-      setError(json.message);
-    }
-    if (response.ok) {
-      setError(null);
-      setImage(json);
+  
+    try {
+      const response = await fetch(`http://localhost:3000/image/get-image/${user.email}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${user.token}`,
+        },
+      });
+      const imageBlob = await response.blob();
+      const imageUrl = URL.createObjectURL(imageBlob);
+      console.log("imageUrl", imageUrl)
+      setImageUrl(imageUrl);
+    } catch (error) {
+      setError(error.message);
+    } finally {
       setLoading(false);
     }
   };
+  
+  
 
 
   return {
@@ -86,6 +89,7 @@ const UploadImage = () => {
     image,
     setImage,
     progress,
+    imageUrl,
   };
 };
 
