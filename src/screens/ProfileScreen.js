@@ -16,9 +16,9 @@ export default function ProfileScreen() {
   const { logout } = useLogout();
 
   useEffect(() => {
-    getExp();
     getImage();
-  }, []);
+    getExp();
+  }, [image]);
 
 
   const pickImage = async () => {

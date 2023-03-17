@@ -15,7 +15,7 @@ export default function AllScreen({ navigation }) {
 
   useEffect(() => {
     getExp();
-  }, [data]);
+  }, []);
 
   function ListEmptyComponent() {
     return (
@@ -26,12 +26,10 @@ export default function AllScreen({ navigation }) {
       </View>
     );
   }
-
   function navigateToUpdate(item) {
     console.log(item);
     navigation.navigate("Update", item);
   }
-
   return (
     <View style={styles.container}>
       {error && <Text style={{ color: "red" }}>{error}</Text>}
@@ -129,7 +127,6 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     marginTop: 10,
     padding: 10,
-    paddingHorizontal: 20,
     shadowColor: "#000",
     shadowOffset: {
       width: 10,

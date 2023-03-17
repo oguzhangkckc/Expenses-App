@@ -30,11 +30,8 @@ const Register = () => {
     const json = await response.json();
     
     if (!response.ok){
-        setLoading(false);
-        setError(json.error);
-        if(password !== confirmPassword){
-            setError("Password does not match");
-        }
+      setLoading(false);
+      setError(json.error);
     }
     if (response.ok){
         await AsyncStorage.setItem('user', JSON.stringify(json));

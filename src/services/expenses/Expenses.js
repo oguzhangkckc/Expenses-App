@@ -14,19 +14,60 @@ const Expenses = () => {
 
   const navigation = useNavigation();
 
-//////////////////////////////////GET EXPENSES///////////////////////////////////////////
+  //////////////////////////////////ADD EXPENSE///////////////////////////////////////////
+
+  const addExp = async (data) => {
+    setLoading(true);
+    setError(null);
+
+    const response = await fetch(
+      `http://localhost:3000/input/add-expense/${user.email}`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${user.token}`,
+        },
+        body: JSON.stringify(data),
+      }
+    );
+    const json = await response.json();
+    console.log(json);
+    if (!response.ok) {
+      setLoading(false);
+      setError(json.message);
+      if (!name || !amount || !description) {
+        setError("Please fill in all fields");
+      }
+    }
+    if (response.ok) {
+      dispatch({ type: "ADD_EXPENSE", payload: json });
+      setError(null);
+      setData(json);
+      setLoading(false);
+      setName(json.name);
+      setAmount(json.amount);
+      setDescription(json.description);
+      navigation.goBack();
+    }
+  };
+
+  //////////////////////////////////GET EXPENSES///////////////////////////////////////////
 
   const getExp = async () => {
     setLoading(true);
     setError(null);
 
-    const response = await fetch("http://localhost:3000/input/get-expense", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${user.token}`,
-      },
-    });
+    const response = await fetch(
+      `http://localhost:3000/input/get-expense/${user.email}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${user.token}`,
+        },
+      }
+    );
     const json = await response.json();
     if (!response.ok) {
       setLoading(false);
@@ -37,10 +78,10 @@ const Expenses = () => {
       setError(null);
       setData(json);
       setLoading(false);
+      console.log(json);
     }
   };
-
-//////////////////////////////////DELETE EXPENSE///////////////////////////////////////////
+  //////////////////////////////////DELETE EXPENSE///////////////////////////////////////////
 
   const deleteExp = async (id) => {
     setLoading(true);
@@ -80,42 +121,7 @@ const Expenses = () => {
     setLoading(false);
   };
 
-//////////////////////////////////ADD EXPENSE///////////////////////////////////////////
-
-  const addExp = async (data) => {
-    setLoading(true);
-    setError(null);
-
-    const response = await fetch("http://localhost:3000/input/add-expense", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${user.token}`,
-      },
-      body: JSON.stringify(data),
-    });
-    const json = await response.json();
-    console.log(json);
-    if (!response.ok) {
-      setLoading(false);
-      setError(json.message);
-      if (!name || !amount || !description) {
-        setError("Please fill in all fields");
-      }
-    }
-    if (response.ok) {
-      dispatch({ type: "ADD_EXPENSE", payload: json });
-      setError(null);
-      setData(json);
-      setLoading(false);
-      setName(json.name);
-      setAmount(json.amount);
-      setDescription(json.description);
-      navigation.goBack();
-    }
-  };
-
-//////////////////////////////////UPDATE EXPENSE///////////////////////////////////////////
+  //////////////////////////////////UPDATE EXPENSE///////////////////////////////////////////
 
   const updateExp = async (data) => {
     setLoading(true);
@@ -152,7 +158,7 @@ const Expenses = () => {
       navigation.goBack();
     }
   };
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   return {
     getExp,
     deleteExp,
