@@ -78,6 +78,7 @@ const Expenses = () => {
       setError(null);
       setData(json);
       setLoading(false);
+      console.log(json)
     }
   };
   //////////////////////////////////DELETE EXPENSE///////////////////////////////////////////
@@ -85,12 +86,6 @@ const Expenses = () => {
   const deleteExp = async (id) => {
     setLoading(true);
     setError(null);
-
-    if (!id) {
-      setError("Invalid expense id");
-      setLoading(false);
-      return;
-    }
 
     const response = await fetch(`http://localhost:3000/input/delete/${id}`, {
       method: "DELETE",

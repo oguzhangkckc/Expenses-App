@@ -63,7 +63,7 @@ export default function ProfileScreen() {
         <TouchableOpacity onPress={pickImage}>
           <View style={styles.uploadView}>
             {imageUrl ? (
-              <Image style={styles.image} source={{ uri: imageUrl }} />
+              <Image style={styles.image} source={{uri: imageUrl}} />
             ) : (
               <View style={styles.uploadView}>
                 <Text style={styles.uploadText}>Upload Profile</Text>

@@ -4,11 +4,11 @@ import { useNavigation } from "@react-navigation/native";
 import { UseAuthContext } from "../../hooks/UseAuthContext";
 
 const UploadImage = () => {
+  const { user } = UseAuthContext();
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(null);
   const [image, setImage] = useState(null);
   const [progress, setProgress] = useState(0);
-  const { user } = UseAuthContext();
   const [imageUrl, setImageUrl] = useState(null);
 
   const navigation = useNavigation();
@@ -74,7 +74,8 @@ const UploadImage = () => {
       const imageBlob = await response.blob();
       const imageUrl = URL.createObjectURL(imageBlob);
       setImageUrl(imageUrl);
-      console.log("imageUrl" + imageUrl)
+      console.log("imageUrl" + imageUrl )
+      console.log("image" + image)
     } catch (error) {
       setError(error.message);
     } finally {
