@@ -1,7 +1,6 @@
 import React from "react";
 import { View } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
-import { LogBox } from 'react-native';
 
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
@@ -22,8 +21,7 @@ const Tab = createBottomTabNavigator();
 
 export default function App() {
   const { user } = UseAuthContext();
-  
-  LogBox.ignoreLogs(['Setting a timer']);
+
   return (
     <NavigationContainer>
       <Stack.Navigator>
