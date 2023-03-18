@@ -113,6 +113,7 @@ const Expenses = () => {
     setError(null);
     setData(json);
     setLoading(false);
+    console.log("deleted item : ", json)
   };
 
   //////////////////////////////////UPDATE EXPENSE///////////////////////////////////////////
