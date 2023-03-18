@@ -11,7 +11,7 @@ import UploadImage from "../services/user/UploadImage";
 
 export default function ProfileScreen() {
   const { user } = UseAuthContext();
-  const { addImage, getImage, error, image, setImage, progress, imageUrl} = UploadImage();
+  const { addImage, getImage, error, image, setImage, progress, imageUrl } = UploadImage();
   const { getExp, data } = Expenses();
   const { logout } = useLogout();
 
@@ -19,7 +19,6 @@ export default function ProfileScreen() {
     getImage();
     getExp();
   }, [image]);
-
 
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -125,8 +124,8 @@ const styles = StyleSheet.create({
     backgroundColor: "#1aacf0",
   },
   image: {
-    width: "100%",
-    height: "100%",
+    width: 200,
+    height: 200,
     borderRadius: 100,
   },
   uploadBtn: {
