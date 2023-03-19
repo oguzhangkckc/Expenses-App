@@ -78,7 +78,6 @@ const Expenses = () => {
       setError(null);
       setData(json);
       setLoading(false);
-      console.log(json)
     }
   };
   //////////////////////////////////DELETE EXPENSE///////////////////////////////////////////
