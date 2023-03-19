@@ -35,7 +35,6 @@ export default function AllScreen({ navigation }) {
     console.log(item);
     navigation.navigate("Update", item);
   }
-  console.log("data", data);
   return (
     <View style={styles.container}>
       {error && <Text style={{ color: "red" }}>{error}</Text>}
