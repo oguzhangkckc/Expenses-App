@@ -17,7 +17,6 @@ export default function AddScreen() {
     setAmount,
     setDescription,
   } = Expenses();
-  console.log(name, amount, description);
 
   return (
     <View style={styles.container}>
