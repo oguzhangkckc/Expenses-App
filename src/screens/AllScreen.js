@@ -1,9 +1,4 @@
-import {
-  View,
-  StyleSheet,
-  FlatList,
-  Text,
-} from "react-native";
+import { View, StyleSheet, FlatList, Text } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import React, { useEffect } from "react";
@@ -11,14 +6,18 @@ import React, { useEffect } from "react";
 import Expenses from "../services/expenses/Expenses";
 
 export default function AllScreen({ navigation }) {
-  const { getExp, deleteExp, error, loading, data, name, amount, description } = Expenses();
+  const { getExp, deleteExp, error, loading, data, setData } = Expenses();
 
   useEffect(() => {
-    getExp();
+    async function fetchExp() {
+      await getExp();
+    }
+    fetchExp();
   }, []);
 
-  submitHandler = (id) => {
-    deleteExp(id);
+  const submitHandler = async (id) => {
+    await deleteExp(id);
+    setData(data.filter((item) => item._id !== id));
     getExp();
   };
 
@@ -40,7 +39,7 @@ export default function AllScreen({ navigation }) {
       {error && <Text style={{ color: "red" }}>{error}</Text>}
       <FlatList
         showsVerticalScrollIndicator={false}
-        data = {data}
+        data={data}
         keyExtractor={(item) => item._id}
         ListEmptyComponent={ListEmptyComponent}
         renderItem={({ item }) => (
@@ -50,7 +49,10 @@ export default function AllScreen({ navigation }) {
                 <Text style={styles.nameText}>{item.name}</Text>
               </View>
               <View style={styles.updateView}>
-                <TouchableOpacity onPress={() => navigateToUpdate(item._id)}>
+                <TouchableOpacity
+                  disabled={loading}
+                  onPress={() => navigateToUpdate(item._id)}
+                >
                   <Ionicons name="create-outline" size={25} color="white" />
                 </TouchableOpacity>
               </View>
@@ -59,7 +61,7 @@ export default function AllScreen({ navigation }) {
                   disabled={loading}
                   onPress={() => submitHandler(item._id)}
                 >
-                    <Ionicons name="trash" size={25} color="white" />
+                  <Ionicons name="trash" size={25} color="white" />
                 </TouchableOpacity>
               </View>
             </View>

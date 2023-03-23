@@ -1,8 +1,9 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { View, Text, StyleSheet, Alert, Image } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { UseAuthContext } from "../hooks/UseAuthContext";
 import * as ImagePicker from "expo-image-picker";
+import axios from "axios";
 
 import { useLogout } from "../services/user/Logout";
 import Expenses from "../services/expenses/Expenses";
@@ -11,12 +12,11 @@ import UploadImage from "../services/user/UploadImage";
 
 export default function ProfileScreen() {
   const { user } = UseAuthContext();
-  const { addImage, getImage, error, image, setImage, progress, imageUrl } = UploadImage();
+  const { addImage, error, image, setImage, progress } = UploadImage();
   const { getExp, data } = Expenses();
   const { logout } = useLogout();
 
   useEffect(() => {
-    getImage();
     getExp();
   }, [image]);
 
@@ -62,8 +62,8 @@ export default function ProfileScreen() {
         {error && <Text style={{ color: "red" }}>{error}</Text>}
         <TouchableOpacity onPress={pickImage}>
           <View style={styles.uploadView}>
-            {imageUrl ? (
-              <Image style={styles.image} source={{uri: imageUrl}} />
+            {image ? (
+              <Image style={styles.image} source={image === "" ? "" : { uri: image }} />
             ) : (
               <View style={styles.uploadView}>
                 <Text style={styles.uploadText}>Upload Profile</Text>

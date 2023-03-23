@@ -9,7 +9,6 @@ const UploadImage = () => {
   const [loading, setLoading] = useState(null);
   const [image, setImage] = useState(null);
   const [progress, setProgress] = useState(0);
-  const [imageUrl, setImageUrl] = useState(null);
 
   const navigation = useNavigation();
 
@@ -50,48 +49,19 @@ const UploadImage = () => {
       setProgress(Math.round((progressEvent.loaded / progressEvent.total) * 100));
     };
     xhr.send(formData);
+    console.log("formdata gönderildi");
+    console.log("imageUri", imageUri);
+    console.log("image", image);
   };
   
-  const getImage = async () => {
-    setLoading(true);
-    setError(null);
-
-    try {
-      const response = await fetch(
-        `http://localhost:3000/image/get-image/${user.email}`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${user.token}`,
-          },
-        }
-      );
-
-      if (!response.ok) {
-        throw new Error("Failed to retrieve image");
-      }
-      const imageBlob = await response.blob();
-      const imageUrl = URL.createObjectURL(imageBlob);
-      setImageUrl(imageUrl);
-      console.log("imageUrl" + imageUrl )
-      console.log("image" + image)
-    } catch (error) {
-      setError(error.message);
-    } finally {
-      setLoading(false);
-    }
-  };
-
+  
   return {
     addImage,
-    getImage,
     error,
     loading,
     image,
     setImage,
     progress,
-    imageUrl,
   };
 };
 

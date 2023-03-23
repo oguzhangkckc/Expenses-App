@@ -50,7 +50,7 @@ export default function LogInScreen() {
             style={{ marginBottom: 20 }}
             onPress={() => navigation.navigate("ResetPassword")}
           >
-            <Text>Did you forget your password?</Text>
+            <Text>Forgot your password?</Text>
           </TouchableOpacity>
           <TouchableOpacity
             disabled={isLoading}

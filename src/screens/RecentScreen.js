@@ -11,14 +11,18 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import Expenses from "../services/expenses/Expenses";
 
 export default function RecentScreen({ navigation }) {
-  const { getExp, deleteExp, error, loading, data } = Expenses();
+  const { getExp, deleteExp, error, loading, data, setData } = Expenses();
 
   useEffect(() => {
-    getExp();
+    async function fetchExp() {
+      await getExp();
+    }
+    fetchExp();
   }, []);
 
-  submitHandler = (id) => {
-    deleteExp(id);
+  const submitHandler = async (id) => {
+    await deleteExp(id);
+    setData(data.filter((item) => item._id !== id));
     getExp();
   };
 

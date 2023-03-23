@@ -78,6 +78,7 @@ const Expenses = () => {
       setError(null);
       setData(json);
       setLoading(false);
+      console.log("getExp")
     }
   };
   //////////////////////////////////DELETE EXPENSE///////////////////////////////////////////
@@ -162,6 +163,7 @@ const Expenses = () => {
     setName,
     setAmount,
     setDescription,
+    setLoading,
     error,
     loading,
     data,
