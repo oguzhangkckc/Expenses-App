@@ -1,7 +1,7 @@
 import { View, StyleSheet, FlatList, Text } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import Ionicons from "react-native-vector-icons/Ionicons";
-import React, { useEffect } from "react";
+import React, { useCallback } from "react";
 import { useFocusEffect } from "@react-navigation/native";
 
 import Expenses from "../services/expenses/Expenses";
@@ -10,7 +10,7 @@ export default function AllScreen({ navigation }) {
   const { getExp, deleteExp, error, loading, data, setData} = Expenses();
 
   useFocusEffect(
-    React.useCallback(() => {
+    useCallback(() => {
       getExp();
     }, [])
   );

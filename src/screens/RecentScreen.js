@@ -5,7 +5,7 @@ import {
   FlatList,
   TouchableOpacity,
 } from "react-native";
-import React, { useEffect } from "react";
+import React, { useCallback } from "react";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { useFocusEffect } from "@react-navigation/native";
 
@@ -15,7 +15,7 @@ export default function RecentScreen({ navigation }) {
   const { getExp, deleteExp, error, loading, data, setData} = Expenses();
 
   useFocusEffect(
-    React.useCallback(() => {
+    useCallback(() => {
       getExp();
     }, [])
   );
