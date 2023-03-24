@@ -7,23 +7,21 @@ import {
 } from "react-native";
 import React, { useEffect } from "react";
 import Ionicons from "react-native-vector-icons/Ionicons";
+import { useFocusEffect } from "@react-navigation/native";
 
 import Expenses from "../services/expenses/Expenses";
 
 export default function RecentScreen({ navigation }) {
-  const { getExp, deleteExp, error, loading, data, setData } = Expenses();
+  const { getExp, deleteExp, error, loading, data, setData} = Expenses();
 
-  useEffect(() => {
-    async function fetchExp() {
-      await getExp();
-    }
-    fetchExp();
-  }, []);
-
+  useFocusEffect(
+    React.useCallback(() => {
+      getExp();
+    }, [])
+  );
   const submitHandler = async (id) => {
     await deleteExp(id);
     setData(data.filter((item) => item._id !== id));
-    getExp();
   };
 
   const recentExp = () => {

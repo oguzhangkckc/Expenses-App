@@ -2,23 +2,22 @@ import { View, StyleSheet, FlatList, Text } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import React, { useEffect } from "react";
+import { useFocusEffect } from "@react-navigation/native";
 
 import Expenses from "../services/expenses/Expenses";
 
 export default function AllScreen({ navigation }) {
-  const { getExp, deleteExp, error, loading, data, setData } = Expenses();
+  const { getExp, deleteExp, error, loading, data, setData} = Expenses();
 
-  useEffect(() => {
-    async function fetchExp() {
-      await getExp();
-    }
-    fetchExp();
-  }, []);
+  useFocusEffect(
+    React.useCallback(() => {
+      getExp();
+    }, [])
+  );
 
   const submitHandler = async (id) => {
     await deleteExp(id);
     setData(data.filter((item) => item._id !== id));
-    getExp();
   };
 
   function ListEmptyComponent() {

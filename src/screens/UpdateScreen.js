@@ -18,7 +18,6 @@ export default function UpdateScreen(props) {
     setAmount,
     setDescription,
   } = Expenses();
-  console.log(name, amount, description);
 
   return (
     <View style={styles.container}>

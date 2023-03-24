@@ -78,9 +78,9 @@ const Expenses = () => {
       setError(null);
       setData(json);
       setLoading(false);
-      console.log("getExp")
     }
   };
+  
   //////////////////////////////////DELETE EXPENSE///////////////////////////////////////////
 
   const deleteExp = async (id) => {
