@@ -50,10 +50,8 @@ const UploadImage = () => {
     };
     xhr.send(formData);
     console.log("formdata gönderildi");
-    console.log("imageUri", imageUri);
     console.log("image", image);
   };
-  
   
   return {
     addImage,

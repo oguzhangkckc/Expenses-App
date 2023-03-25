@@ -12,7 +12,7 @@ import { useFocusEffect } from "@react-navigation/native";
 import Expenses from "../services/expenses/Expenses";
 
 export default function RecentScreen({ navigation }) {
-  const { getExp, deleteExp, error, loading, data, setData} = Expenses();
+  const { getExp, deleteExp, error, loading, data, setData } = Expenses();
 
   useFocusEffect(
     useCallback(() => {

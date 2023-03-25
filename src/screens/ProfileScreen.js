@@ -3,7 +3,6 @@ import { View, Text, StyleSheet, Alert, Image } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { UseAuthContext } from "../hooks/UseAuthContext";
 import * as ImagePicker from "expo-image-picker";
-import axios from "axios";
 
 import { useLogout } from "../services/user/Logout";
 import Expenses from "../services/expenses/Expenses";
@@ -63,7 +62,7 @@ export default function ProfileScreen() {
         <TouchableOpacity onPress={pickImage}>
           <View style={styles.uploadView}>
             {image ? (
-              <Image style={styles.image} source={image === "" ? "" : { uri: image }} />
+              <Image style={styles.image} source={{ uri: image }} />
             ) : (
               <View style={styles.uploadView}>
                 <Text style={styles.uploadText}>Upload Profile</Text>
