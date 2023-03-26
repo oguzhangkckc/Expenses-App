@@ -58,7 +58,8 @@ const UploadImage = () => {
     try{
       const response = await fetch(`http://localhost:3000/image/get-image/${user.email}`);
       const blob = await response.blob();
-      setImageData(blob);
+      const image = URL.createObjectURL(blob);
+      setImageData(image);
       console.log("image çekildi");
     } catch (error) {
       setError("An error occurred while fetching the image.");

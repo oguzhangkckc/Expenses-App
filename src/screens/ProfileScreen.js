@@ -9,16 +9,11 @@ import Expenses from "../services/expenses/Expenses";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import UploadImage from "../services/user/UploadImage";
 import { useFocusEffect } from "@react-navigation/native";
-import Reactotron from 'reactotron-react-native';
-
-Reactotron
-  .configure({ name: 'CrashityCrashCrash '})
-  .useReactNative()
-  .connect()
 
 export default function ProfileScreen() {
   const { user } = UseAuthContext();
-  const { addImage, fetchImage, error, image, setImage, imageData, progress } = UploadImage();
+  const { addImage, fetchImage, error, image, setImage, imageData, progress } =
+    UploadImage();
   const { getExp, data } = Expenses();
   const { logout } = useLogout();
 
@@ -30,7 +25,6 @@ export default function ProfileScreen() {
     }, [])
   );
 
-
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
@@ -40,7 +34,8 @@ export default function ProfileScreen() {
     });
 
     if (!result.canceled) {
-      setImage(result.assets[0]);
+      setImage(result.assets[0].uri);
+      console.log("image", image);
     }
   };
 
@@ -71,16 +66,11 @@ export default function ProfileScreen() {
       </View>
       <View>
         {error && <Text style={{ color: "red" }}>{error}</Text>}
-        <TouchableOpacity onPress={pickImage}>
-          <View style={styles.uploadView}>
-            {image ? (
-              <Image source={{ uri: image.uri }} style={styles.image} />
-            ) : (
-              <Image source={{ uri: imageData }} style={styles.image} />
-            )
-            }
-          </View>
-        </TouchableOpacity>
+          <TouchableOpacity onPress={pickImage}>
+            <View style={styles.uploadView}>
+              <Image source={{ uri: imageData }}  />
+            </View>
+          </TouchableOpacity>
         {progress > 0 && (
           <Text style={{ color: "white", fontSize: 20, fontWeight: "bold" }}>
             {progress}% uploaded
