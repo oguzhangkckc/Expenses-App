@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect } from "react";
 import { View, Text, StyleSheet, Alert, Image } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { UseAuthContext } from "../hooks/UseAuthContext";
@@ -8,16 +8,28 @@ import { useLogout } from "../services/user/Logout";
 import Expenses from "../services/expenses/Expenses";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import UploadImage from "../services/user/UploadImage";
+import { useFocusEffect } from "@react-navigation/native";
+import Reactotron from 'reactotron-react-native';
+
+Reactotron
+  .configure({ name: 'CrashityCrashCrash '})
+  .useReactNative()
+  .connect()
 
 export default function ProfileScreen() {
   const { user } = UseAuthContext();
-  const { addImage, error, image, setImage, progress } = UploadImage();
+  const { addImage, fetchImage, error, image, setImage, imageData, progress } = UploadImage();
   const { getExp, data } = Expenses();
   const { logout } = useLogout();
 
-  useEffect(() => {
-    getExp();
-  }, [image]);
+  useFocusEffect(
+    useCallback(() => {
+      getExp();
+      fetchImage();
+      console.log("imageData", imageData);
+    }, [])
+  );
+
 
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -28,7 +40,7 @@ export default function ProfileScreen() {
     });
 
     if (!result.canceled) {
-      setImage(result.assets[0].uri);
+      setImage(result.assets[0]);
     }
   };
 
@@ -62,13 +74,11 @@ export default function ProfileScreen() {
         <TouchableOpacity onPress={pickImage}>
           <View style={styles.uploadView}>
             {image ? (
-              <Image style={styles.image} source={{ uri: image }} />
+              <Image source={{ uri: image.uri }} style={styles.image} />
             ) : (
-              <View style={styles.uploadView}>
-                <Text style={styles.uploadText}>Upload Profile</Text>
-                <Text style={styles.uploadText}>Picture</Text>
-              </View>
-            )}
+              <Image source={{ uri: imageData }} style={styles.image} />
+            )
+            }
           </View>
         </TouchableOpacity>
         {progress > 0 && (

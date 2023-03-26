@@ -9,6 +9,7 @@ const UploadImage = () => {
   const [loading, setLoading] = useState(null);
   const [image, setImage] = useState(null);
   const [progress, setProgress] = useState(0);
+  const [imageData, setImageData] = useState(null);
 
   const navigation = useNavigation();
 
@@ -52,13 +53,29 @@ const UploadImage = () => {
     console.log("formdata gönderildi");
     console.log("image", image);
   };
+
+  const fetchImage = async () => {
+    try{
+      const response = await fetch(`http://localhost:3000/image/get-image/${user.email}`);
+      const blob = await response.blob();
+      setImageData(blob);
+      console.log("image çekildi");
+    } catch (error) {
+      setError("An error occurred while fetching the image.");
+    }
+  };
+
   
   return {
     addImage,
+    fetchImage,
     error,
     loading,
     image,
     setImage,
+    imageData,
+    setImageData,
+    setError,
     progress,
   };
 };
