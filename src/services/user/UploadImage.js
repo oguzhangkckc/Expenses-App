@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
+import axios from "axios";
 
 import { UseAuthContext } from "../../hooks/UseAuthContext";
 
@@ -55,11 +56,13 @@ const UploadImage = () => {
   };
 
   const fetchImage = async () => {
-    try{
-      const response = await fetch(`http://localhost:3000/image/get-image/${user.email}`);
-      const blob = await response.blob();
-      const image = URL.createObjectURL(blob);
+    try {
+      const response = await axios.get(`http://localhost:3000/image/get-image/${user.email}`, {
+        responseType: 'blob'
+      });
+      const image = URL.createObjectURL(response.data);
       setImageData(image);
+      console.log("imageData", imageData)
       console.log("image çekildi");
     } catch (error) {
       setError("An error occurred while fetching the image.");
