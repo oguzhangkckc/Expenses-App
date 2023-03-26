@@ -56,13 +56,11 @@ const UploadImage = () => {
   };
 
   const fetchImage = async () => {
-    try {
-      const response = await axios.get(`http://localhost:3000/image/get-image/${user.email}`, {
-        responseType: 'blob'
-      });
-      const image = URL.createObjectURL(response.data);
+    try{
+      const response = await fetch(`http://localhost:3000/image/get-image/${user.email}`);
+      const blob = await response.blob();
+      const image = URL.createObjectURL(blob);
       setImageData(image);
-      console.log("imageData", imageData)
       console.log("image çekildi");
     } catch (error) {
       setError("An error occurred while fetching the image.");

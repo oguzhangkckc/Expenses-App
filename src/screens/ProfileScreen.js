@@ -21,7 +21,8 @@ export default function ProfileScreen() {
     useCallback(() => {
       getExp();
       fetchImage();
-    }, [])
+      console.log("imageData", imageData);
+    }, [image])
   );
 
   const pickImage = async () => {
@@ -66,8 +67,12 @@ export default function ProfileScreen() {
       <View>
         {error && <Text style={{ color: "red" }}>{error}</Text>}
           <TouchableOpacity onPress={pickImage}>
-            <View style={styles.uploadView}>
+            <View style={styles.uploadView}> 
+            {image !== null ? (
+              <Image source={{ uri: image }} style={styles.image} />
+              ) : (
               <Image source={{ uri: imageData }} style={styles.image} />
+              )}
             </View>
           </TouchableOpacity>
         {progress > 0 && (
