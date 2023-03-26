@@ -21,7 +21,6 @@ export default function ProfileScreen() {
     useCallback(() => {
       getExp();
       fetchImage();
-      console.log("imageData", imageData);
     }, [image])
   );
 
