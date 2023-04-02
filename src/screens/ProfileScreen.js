@@ -171,7 +171,7 @@ const styles = StyleSheet.create({
   icon: {
     alignItems: "center",
     justifyContent: "center",
-    paddingTop: 20,
+    paddingTop: 40,
   },
   texts: {
     position: "absolute",
